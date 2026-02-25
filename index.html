@@ -9,13 +9,12 @@
 <script>
   const usuario = localStorage.getItem("usuario");
   if(!usuario){
-    // Redirige directamente al login
     window.location.href = "login.html";
   }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
 *{box-sizing:border-box;}
@@ -268,7 +267,10 @@ function calcular(){
   let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
   let eficiencia=Math.round((conversion+adicionalesPorcentaje)/2);
 
+  const usuario = localStorage.getItem("usuario") || "Usuario";
+
   document.getElementById("contenido").innerHTML=`
+    <div class="fecha">Usuario: ${usuario}</div>
     <div class="fecha">Fecha: ${fechaHoy()}</div>
     <h3>Información</h3>
     <ul class="lista">
@@ -309,11 +311,19 @@ function cerrarPopup(){
 }
 
 async function exportarPDF(){
-  const popup=document.getElementById("popup");
-  const canvas=await html2canvas(popup);
-  const imgData=canvas.toDataURL("image/png");
-  const pdf=new jspdf.jsPDF();
-  pdf.addImage(imgData,"PNG",10,10,190,0);
+  const popup = document.getElementById("popup");
+  popup.style.display = "block";
+  document.getElementById("overlay").style.display = "block";
+
+  const canvas = await html2canvas(popup, { scale: 2 });
+  const imgData = canvas.toDataURL("image/png");
+  const pdf = new jspdf.jsPDF("p", "mm", "a4");
+
+  const imgProps = pdf.getImageProperties(imgData);
+  const pdfWidth = pdf.internal.pageSize.getWidth() - 20; 
+  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+  pdf.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
   pdf.save("reporte_panel_ejecutivo.pdf");
 }
 </script>
