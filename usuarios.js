@@ -1,6 +1,6 @@
 // usuarios.js
 const usuarios = [
-  { nombre: "Juan Perez", password: "12345" },
-  { nombre: "Maria Lopez", password: "abcde" },
+  { nombre: "INVITADO", password: "DOMINOS" },
+  { nombre: "bubu", password: "bubu" },
   { nombre: "Christopher Chivalan", password: "dominos" }
 ];
