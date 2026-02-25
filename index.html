@@ -67,12 +67,6 @@ input{
   background:#0f172a;
   color:#f8fafc;
   font-size:14px;
-  transition:0.3s;
-}
-
-input:focus{
-  border-color:#00c6ff;
-  box-shadow:0 0 0 2px rgba(0,198,255,0.3);
 }
 
 button{
@@ -86,20 +80,10 @@ button{
   font-weight:bold;
   font-size:15px;
   cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
 .btn-rojo{
   background:linear-gradient(90deg,#7f1d1d,#b91c1c);
-}
-
-.btn-rojo:hover{
-  box-shadow:0 10px 25px rgba(185,28,28,0.4);
 }
 
 .lista{
@@ -142,7 +126,6 @@ button:hover{
   font-size:20px;
   border:none;
   cursor:pointer;
-  box-shadow:0 15px 30px rgba(0,0,0,0.7);
 }
 
 .popup{
@@ -157,8 +140,6 @@ button:hover{
   border-radius:20px;
   display:none;
   z-index:1001;
-  box-shadow:0 40px 80px rgba(0,0,0,0.9);
-  border:1px solid rgba(255,255,255,0.05);
 }
 
 .overlay{
@@ -167,11 +148,6 @@ button:hover{
   background:rgba(0,0,0,0.75);
   display:none;
   z-index:1000;
-}
-
-h3{
-  margin-bottom:10px;
-  color:#f8fafc;
 }
 
 .fecha{
@@ -291,8 +267,8 @@ function calcular(){
     <div class="resultado ${colorClase(eficiencia)}">Eficiencia: ${eficiencia}%</div>
   `;
 
-  document.getElementById("popup").style.display='block';
-  document.getElementById("overlay").style.display='block';
+  popup.style.display='block';
+  overlay.style.display='block';
 }
 
 function mostrarFormulas(){
@@ -304,13 +280,13 @@ function mostrarFormulas(){
       <li>Eficiencia = (Conversión + Adicionales) ÷ 2</li>
     </ul>
   `;
-  document.getElementById("popup").style.display='block';
-  document.getElementById("overlay").style.display='block';
+  popup.style.display='block';
+  overlay.style.display='block';
 }
 
 function cerrarPopup(){
-  document.getElementById("popup").style.display='none';
-  document.getElementById("overlay").style.display='none';
+  popup.style.display='none';
+  overlay.style.display='none';
 }
 
 function cerrarSesion(){
@@ -318,52 +294,42 @@ function cerrarSesion(){
   window.location.href="login.html";
 }
 
-/* 🔥 FUNCIÓN CORREGIDA — YA NO SE CORTA EL PDF */
+/* 🔥 EXPORTAR EN UNA SOLA HOJA CENTRADO */
 async function exportarPDF(){
 
   const popup = document.getElementById("popup");
-  const overlay = document.getElementById("overlay");
 
   popup.style.display = "block";
-  overlay.style.display = "block";
-
   popup.style.height = "auto";
   popup.style.maxHeight = "none";
   popup.style.overflow = "visible";
 
-  await new Promise(resolve => setTimeout(resolve, 300));
+  await new Promise(resolve => setTimeout(resolve, 200));
 
   const canvas = await html2canvas(popup, {
-    scale: 3,
-    useCORS: true,
-    scrollY: -window.scrollY,
+    scale: 2,
     backgroundColor: "#111c2e"
   });
 
   const imgData = canvas.toDataURL("image/png");
 
   const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF("p", "mm", "a4");
+  const pdf = new jsPDF("p","mm","a4");
 
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
 
-  const margin = 10;
+  const margin = 15;
   const imgWidth = pageWidth - (margin * 2);
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  let heightLeft = imgHeight;
-  let position = margin;
+  const finalHeight = imgHeight > (pageHeight - margin * 2)
+      ? (pageHeight - margin * 2)
+      : imgHeight;
 
-  pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
-  heightLeft -= (pageHeight - margin * 2);
+  const y = (pageHeight - finalHeight) / 2;
 
-  while (heightLeft > 0) {
-    position = heightLeft - imgHeight + margin;
-    pdf.addPage();
-    pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
-    heightLeft -= (pageHeight - margin * 2);
-  }
+  pdf.addImage(imgData,"PNG",margin,y,imgWidth,finalHeight);
 
   const usuario = localStorage.getItem("usuario") || "Usuario";
   const fecha = new Date().toLocaleDateString('es-GT').replace(/\//g,'-');
