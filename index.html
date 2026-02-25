@@ -150,10 +150,11 @@ button{
   z-index:1000;
 }
 
+/* 🔥 CAMBIO AQUÍ */
 .fecha{
   font-size:12px;
-  margin-bottom:10px;
-  color:#00c6ff;
+  margin-bottom:5px;
+  color:#ffffff;   /* Ahora blanco */
   text-align:right;
 }
 </style>
@@ -210,6 +211,7 @@ button{
 
 <script>
 
+/* TODO TU JS ORIGINAL SIN CAMBIOS */
 function formatoTiempo(segundos){
   let min=Math.floor(segundos/60);
   let sec=segundos%60;
@@ -294,7 +296,6 @@ function cerrarSesion(){
   window.location.href="login.html";
 }
 
-/* 🔥 EXPORTAR EN UNA SOLA HOJA CENTRADO */
 async function exportarPDF(){
 
   const popup = document.getElementById("popup");
@@ -306,11 +307,7 @@ async function exportarPDF(){
 
   await new Promise(resolve => setTimeout(resolve, 200));
 
-  const canvas = await html2canvas(popup, {
-    scale: 2,
-    backgroundColor: "#111c2e"
-  });
-
+  const canvas = await html2canvas(popup,{scale:2,backgroundColor:"#111c2e"});
   const imgData = canvas.toDataURL("image/png");
 
   const { jsPDF } = window.jspdf;
@@ -336,7 +333,6 @@ async function exportarPDF(){
 
   pdf.save(`reporte_${usuario}_${fecha}.pdf`);
 }
-
 </script>
 
 </body>
