@@ -191,9 +191,10 @@ button{
     <input type="number" id="ventas">
   </div>
 
+  <!-- 🔥 CAMBIO: Tiempo en formato mm:ss -->
   <div class="input-group">
-    <label>Tiempo en Llamadas (segundos)</label>
-    <input type="number" id="tiempo">
+    <label>Tiempo en Llamadas (mm:ss)</label>
+    <input type="text" id="tiempo" placeholder="ej. 03:20">
   </div>
 
   <div class="input-group">
@@ -246,8 +247,15 @@ function calcular(){
   let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
   let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
   let ventas=parseFloat(document.getElementById("ventas").value)||0;
-  let tiempo=parseFloat(document.getElementById("tiempo").value)||0;
   let ticket=parseFloat(document.getElementById("ticket").value)||0;
+
+  // 🔥 CAMBIO: convertir mm:ss a segundos
+  let tiempoInput = document.getElementById("tiempo").value || "00:00";
+  let partes = tiempoInput.split(":");
+  let tiempo = 0;
+  if(partes.length === 2){
+    tiempo = parseInt(partes[0],10)*60 + parseInt(partes[1],10);
+  }
 
   let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
   let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
