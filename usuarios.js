@@ -2,7 +2,7 @@
 const usuarios = [
   { nombre: "INVITADO", password: "DOMINOS" },
   { nombre: "Kevin Giovanni Gonzalez Alonzo", password: "dominos" },
-  { nombre: "INVITADO", password: "DOMINOS" },
+  { nombre: "Vincen Miguel Sian Valdez", password: "dominos" },
   { nombre: "bubu", password: "bubu" },
   { nombre: "INVITADO", password: "DOMINOS" },
   { nombre: "bubu", password: "bubu" },
