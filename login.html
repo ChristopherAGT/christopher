@@ -7,38 +7,70 @@
 <script src="usuarios.js"></script>
 <style>
 body {
+  margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f172a, #111827);
-  color: #e5e7eb;
+  background: linear-gradient(135deg,#0f2027,#1c2b40,#2c5364);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  color: #e5e7eb;
 }
+
 .container {
-  background: #1e293b;
-  padding: 30px;
+  background: #111c2e;
+  padding: 35px 30px;
   border-radius: 20px;
-  width: 320px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
 }
-input, button {
+
+h2 {
+  color: #f1f5f9;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
+
+input {
   width: 100%;
   padding: 12px;
   margin: 8px 0;
   border-radius: 10px;
-  border: none;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #f8fafc;
   font-size: 14px;
+  outline: none;
+  transition: 0.3s;
 }
+
+input:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 0 2px rgba(0,198,255,0.3);
+}
+
 button {
-  background: linear-gradient(90deg, #1e3a8a, #2563eb);
+  width: 100%;
+  padding: 13px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 15px;
+  background: linear-gradient(90deg,#1c3d5a,#00c6ff);
   color: white;
   font-weight: bold;
+  font-size: 15px;
   cursor: pointer;
+  transition: 0.3s;
 }
+
 button:hover {
-  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
 }
+
 .error {
   color: #f87171;
   font-size: 13px;
@@ -50,8 +82,8 @@ button:hover {
 
 <div class="container">
   <h2>Iniciar Sesión</h2>
-  <input type="text" id="nombre" placeholder="Nombre completo">
-  <input type="password" id="password" placeholder="Contraseña">
+  <input type="text" id="nombre" name="usuario" placeholder="Nombre completo" autocomplete="off">
+  <input type="password" id="password" name="clave" placeholder="Contraseña" autocomplete="off">
   <button onclick="login()">Ingresar</button>
   <div class="error" id="error"></div>
 </div>
@@ -65,10 +97,8 @@ function login(){
   const usuario = usuarios.find(u => u.nombre === nombre && u.password === password);
 
   if(usuario){
-    // Guardar usuario en localStorage
     localStorage.setItem("usuario", nombre);
-    // Redirigir al panel
-    window.location.href = "panel.html";
+    window.location.href = "panel.html"; // tu panel
   } else {
     errorDiv.textContent = "Nombre o contraseña incorrectos";
   }
