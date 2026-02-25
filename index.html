@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel de Indicadores</title>
+<title>Panel Ejecutivo</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -11,170 +11,173 @@
 <style>
 *{box-sizing:border-box;}
 
-body {
+body{
   margin:0;
-  font-family:'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #141e30, #243b55);
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0f2027,#1c2b40,#2c5364);
   display:flex;
   justify-content:center;
   align-items:center;
   min-height:100vh;
   padding:20px;
-  color:white;
+  color:#e5e7eb;
 }
 
-.container {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(18px);
-  padding: 35px 30px;
-  border-radius: 22px;
+.container{
+  background:#111c2e;
+  padding:35px 30px;
+  border-radius:20px;
   width:100%;
   max-width:420px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  box-shadow:0 30px 60px rgba(0,0,0,0.8);
+  border:1px solid rgba(255,255,255,0.05);
 }
 
-h1 {
+h1{
   text-align:center;
   margin-bottom:25px;
+  color:#f1f5f9;
+  letter-spacing:1px;
 }
 
-.input-group {
+.input-group{
   margin-bottom:18px;
   display:flex;
   flex-direction:column;
 }
 
-label {
+label{
   font-size:13px;
   margin-bottom:6px;
-  opacity:0.85;
+  color:#8faacb;
 }
 
-input {
-  width:100%;
+input{
   padding:12px;
   border-radius:10px;
-  border:none;
-  outline:none;
+  border:1px solid #334155;
+  background:#0f172a;
+  color:#f8fafc;
   font-size:14px;
-  transition:0.2s ease;
+  transition:0.3s;
 }
 
-input:focus {
-  box-shadow:0 0 0 2px #00c6ff;
+input:focus{
+  border-color:#00c6ff;
+  box-shadow:0 0 0 2px rgba(0,198,255,0.3);
 }
 
-button {
+button{
   width:100%;
   padding:13px;
   border-radius:12px;
   border:none;
   margin-top:15px;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  background:linear-gradient(90deg,#1c3d5a,#00c6ff);
   color:white;
   font-weight:bold;
   font-size:15px;
   cursor:pointer;
-  transition:0.2s ease;
+  transition:0.3s;
 }
 
-button:hover {
+button:hover{
   transform:translateY(-2px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.4);
+  box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
-.btn-rojo {
-  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+.btn-rojo{
+  background:linear-gradient(90deg,#7f1d1d,#b91c1c);
 }
 
-.btn-rojo:hover {
-  box-shadow:0 10px 20px rgba(255,75,43,0.4);
+.btn-rojo:hover{
+  box-shadow:0 10px 25px rgba(185,28,28,0.4);
 }
 
-.lista {
+.lista{
   list-style:none;
   padding:0;
   margin:5px 0;
 }
 
-.lista li {
+.lista li{
   display:flex;
   justify-content:space-between;
-  padding:4px 0;
-  font-size:16px;
+  padding:6px 0;
+  font-size:14px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
-.resultado {
+.resultado{
   font-weight:bold;
-  font-size:16px;
-  margin-bottom:8px;
-  padding:8px 12px;
+  font-size:14px;
+  margin-bottom:10px;
+  padding:10px 12px;
   border-radius:10px;
   text-align:center;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  color:white;
 }
 
-.verde {color:#00E5A8; background: rgba(0,229,168,0.15);}
-.amarillo {color:#FFC857; background: rgba(255,200,87,0.15);}
-.rojo {color:#FF5C7A; background: rgba(255,92,122,0.15);}
+.verde{background:linear-gradient(90deg,#065f46,#10b981);}
+.amarillo{background:linear-gradient(90deg,#92400e,#f59e0b);}
+.rojo{background:linear-gradient(90deg,#450a0a,#991b1b);}
 
-.floating-btn {
+.floating-btn{
   position:fixed;
   bottom:20px;
   right:20px;
   width:45px;
   height:45px;
   border-radius:50%;
-  background:#ffffff;
-  color:#243b55;
+  background:linear-gradient(135deg,#1c2b40,#00c6ff);
+  color:white;
   font-size:20px;
   border:none;
   cursor:pointer;
-  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+  box-shadow:0 15px 30px rgba(0,0,0,0.7);
 }
 
-.popup {
+.popup{
   position:fixed;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
   width:380px;
   max-width:95%;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(8px);
-  color:#1a1a1a;
+  background:#111c2e;
   padding:25px;
   border-radius:20px;
   display:none;
   z-index:1001;
-  box-shadow:0 30px 60px rgba(0,0,0,0.4);
+  box-shadow:0 40px 80px rgba(0,0,0,0.9);
+  border:1px solid rgba(255,255,255,0.05);
 }
 
-.overlay {
+.overlay{
   position:fixed;
   inset:0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
+  background:rgba(0,0,0,0.75);
   display:none;
   z-index:1000;
 }
 
-h3 {margin-bottom:10px; text-align:left;}
-.fecha {font-size:12px; margin-bottom:10px; color:#0072ff; text-align:right;}
+h3{
+  margin-bottom:10px;
+  color:#f8fafc;
+}
+
+.fecha{
+  font-size:12px;
+  margin-bottom:10px;
+  color:#00c6ff;
+  text-align:right;
+}
 </style>
 </head>
+
 <body>
-
-<script>
-  // Validación de login
-  const usuario = localStorage.getItem("usuario");
-  if(!usuario){
-    window.location.href = "login.html";
-  }
-</script>
-
 <div class="container">
-  <h1>Panel de Indicadores</h1>
+  <h1>Panel Ejecutivo</h1>
 
   <div class="input-group">
     <label>Total de Órdenes</label>
@@ -213,7 +216,6 @@ h3 {margin-bottom:10px; text-align:left;}
 <button class="floating-btn" onclick="mostrarFormulas()">❔</button>
 
 <div class="overlay" id="overlay" onclick="cerrarPopup()"></div>
-
 <div class="popup" id="popup">
   <div id="contenido"></div>
   <button onclick="exportarPDF()">Exportar PDF</button>
@@ -222,19 +224,19 @@ h3 {margin-bottom:10px; text-align:left;}
 
 <script>
 function formatoTiempo(segundos){
-  let min = Math.floor(segundos/60);
-  let sec = segundos%60;
+  let min=Math.floor(segundos/60);
+  let sec=segundos%60;
   return String(min).padStart(2,'0')+":"+String(sec).padStart(2,'0');
 }
 
 function formatoMoneda(valor){
-  return valor.toLocaleString('es-GT',{style:'currency',currency:'GTQ', minimumFractionDigits:2});
+  return valor.toLocaleString('es-GT',{style:'currency',currency:'GTQ'});
 }
 
 function colorClase(valor){
-  if(valor>=70) return 'verde';
-  if(valor>=40) return 'amarillo';
-  return 'rojo';
+  if(valor>=70)return'verde';
+  if(valor>=40)return'amarillo';
+  return'rojo';
 }
 
 function limpiarDatos(){
@@ -246,16 +248,16 @@ function fechaHoy(){
 }
 
 function calcular(){
-  let ordenes = parseFloat(document.getElementById("ordenes").value)||0;
-  let adicionales = parseFloat(document.getElementById("adicionales").value)||0;
-  let llamadas = parseFloat(document.getElementById("llamadas").value)||0;
-  let ventas = parseFloat(document.getElementById("ventas").value)||0;
-  let tiempo = parseFloat(document.getElementById("tiempo").value)||0;
-  let ticket = parseFloat(document.getElementById("ticket").value)||0;
+  let ordenes=parseFloat(document.getElementById("ordenes").value)||0;
+  let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
+  let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
+  let ventas=parseFloat(document.getElementById("ventas").value)||0;
+  let tiempo=parseFloat(document.getElementById("tiempo").value)||0;
+  let ticket=parseFloat(document.getElementById("ticket").value)||0;
 
-  let conversion = llamadas>0?Math.round((ordenes/llamadas)*100):0;
-  let adicionalesPorcentaje = ordenes>0?Math.round((adicionales/ordenes)*100):0;
-  let eficiencia = Math.round((conversion+adicionalesPorcentaje)/2);
+  let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
+  let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
+  let eficiencia=Math.round((conversion+adicionalesPorcentaje)/2);
 
   const usuario = localStorage.getItem("usuario") || "Usuario";
 
@@ -273,9 +275,9 @@ function calcular(){
     </ul>
     <hr>
     <h3>Resultados</h3>
-    <div class="resultado ${colorClase(conversion)}">📈 Conversión: ${conversion}%</div>
-    <div class="resultado ${colorClase(adicionalesPorcentaje)}">➕ Adicionales: ${adicionalesPorcentaje}%</div>
-    <div class="resultado ${colorClase(eficiencia)}">⚡ Eficiencia: ${eficiencia}%</div>
+    <div class="resultado ${colorClase(conversion)}">Conversión: ${conversion}%</div>
+    <div class="resultado ${colorClase(adicionalesPorcentaje)}">Adicionales: ${adicionalesPorcentaje}%</div>
+    <div class="resultado ${colorClase(eficiencia)}">Eficiencia: ${eficiencia}%</div>
   `;
 
   document.getElementById("popup").style.display='block';
@@ -302,15 +304,15 @@ function cerrarPopup(){
 
 async function exportarPDF(){
   const popup = document.getElementById("popup");
-  popup.style.display='block';
-  document.getElementById("overlay").style.display='block';
+  popup.style.display = "block";
+  document.getElementById("overlay").style.display = "block";
 
-  const canvas = await html2canvas(popup, { scale: 3, backgroundColor: null });
+  const canvas = await html2canvas(popup, { scale: 2 });
   const imgData = canvas.toDataURL("image/png");
-  const pdf = new jspdf.jsPDF("p","mm","a4");
+  const pdf = new jspdf.jsPDF("p", "mm", "a4");
 
   const imgProps = pdf.getImageProperties(imgData);
-  const pdfWidth = pdf.internal.pageSize.getWidth() - 20;
+  const pdfWidth = pdf.internal.pageSize.getWidth() - 20; 
   const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
   pdf.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
