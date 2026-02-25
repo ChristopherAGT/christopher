@@ -6,7 +6,6 @@
 <title>Login Panel</title>
 <script src="usuarios.js"></script>
 <style>
-/* 🔹 Asegura que html y body ocupen 100% de altura */
 html, body {
   height: 100%;
   margin: 0;
@@ -17,12 +16,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
   background: linear-gradient(135deg,#0f2027,#1c2b40,#2c5364);
   font-family: 'Segoe UI', sans-serif;
   color: #e5e7eb;
 }
 
 .container {
+  display: flex;
+  flex-direction: column; /* fuerza columna */
+  justify-content: center; /* centra verticalmente los elementos dentro del container */
+  align-items: center;     /* centra horizontalmente los elementos */
   background: #111c2e;
   padding: 35px 30px;
   border-radius: 20px;
