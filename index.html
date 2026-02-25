@@ -177,6 +177,15 @@ h3{
 
 <body>
 
+  <!-- VALIDACIÓN DE LOGIN -->
+  <script>
+  const usuario = localStorage.getItem("usuario");
+  if(!usuario){
+    alert("Debes iniciar sesión primero");
+    window.location.href = "login.html";
+  }
+  </script>
+  
 <div class="container">
   <h1>Panel Ejecutivo</h1>
 
