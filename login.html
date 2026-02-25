@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Panel</title>
+<link rel="stylesheet" href="estilos.css">
+<script src="usuarios.js"></script>
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #111827);
+  color: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 20px;
+  width: 320px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+}
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+}
+button {
+  background: linear-gradient(90deg, #1e3a8a, #2563eb);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
+}
+.error {
+  color: #f87171;
+  font-size: 13px;
+  margin-top: 5px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Iniciar Sesión</h2>
+  <input type="text" id="nombre" placeholder="Nombre completo">
+  <input type="password" id="password" placeholder="Contraseña">
+  <button onclick="login()">Ingresar</button>
+  <div class="error" id="error"></div>
+</div>
+
+<script>
+function login(){
+  const nombre = document.getElementById("nombre").value.trim();
+  const password = document.getElementById("password").value;
+  const errorDiv = document.getElementById("error");
+
+  const usuario = usuarios.find(u => u.nombre === nombre && u.password === password);
+
+  if(usuario){
+    // Guardar usuario en localStorage (opcional)
+    localStorage.setItem("usuario", nombre);
+    // Redirigir a tu panel
+    window.location.href = "panel.html";
+  } else {
+    errorDiv.textContent = "Nombre o contraseña incorrectos";
+  }
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Panel</title>
+<link rel="stylesheet" href="estilos.css">
+<script src="usuarios.js"></script>
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #111827);
+  color: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 20px;
+  width: 320px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+}
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+}
+button {
+  background: linear-gradient(90deg, #1e3a8a, #2563eb);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
+}
+.error {
+  color: #f87171;
+  font-size: 13px;
+  margin-top: 5px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Iniciar Sesión</h2>
+  <input type="text" id="nombre" placeholder="Nombre completo">
+  <input type="password" id="password" placeholder="Contraseña">
+  <button onclick="login()">Ingresar</button>
+  <div class="error" id="error"></div>
+</div>
+
+<script>
+function login(){
+  const nombre = document.getElementById("nombre").value.trim();
+  const password = document.getElementById("password").value;
+  const errorDiv = document.getElementById("error");
+
+  const usuario = usuarios.find(u => u.nombre === nombre && u.password === password);
+
+  if(usuario){
+    // Guardar usuario en localStorage (opcional)
+    localStorage.setItem("usuario", nombre);
+    // Redirigir a tu panel
+    window.location.href = "panel.html";
+  } else {
+    errorDiv.textContent = "Nombre o contraseña incorrectos";
+  }
+}
+</script>
+
+</body>
+</html>
