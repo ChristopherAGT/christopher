@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel Ejecutivo</title>
 
+<!-- VALIDACIÓN DE LOGIN -->
+<script>
+  const usuario = localStorage.getItem("usuario");
+  if(!usuario){
+    window.location.href = "login.html";
+  }
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -211,6 +219,7 @@ h3{
 
   <button onclick="calcular()">Calcular</button>
   <button class="btn-rojo" onclick="limpiarDatos()">Limpiar Datos</button>
+  <button class="btn-rojo" onclick="cerrarSesion()">Cerrar Sesión</button>
 </div>
 
 <button class="floating-btn" onclick="mostrarFormulas()">❔</button>
@@ -302,6 +311,11 @@ function cerrarPopup(){
   document.getElementById("overlay").style.display='none';
 }
 
+function cerrarSesion(){
+  localStorage.removeItem("usuario");
+  window.location.href="login.html";
+}
+
 async function exportarPDF(){
   const popup = document.getElementById("popup");
   popup.style.display = "block";
@@ -311,12 +325,15 @@ async function exportarPDF(){
   const imgData = canvas.toDataURL("image/png");
   const pdf = new jspdf.jsPDF("p", "mm", "a4");
 
+  const usuario = localStorage.getItem("usuario") || "Usuario";
+  const fecha = new Date().toLocaleDateString('es-GT').replace(/\//g,'-');
+
   const imgProps = pdf.getImageProperties(imgData);
   const pdfWidth = pdf.internal.pageSize.getWidth() - 20; 
   const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
   pdf.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
-  pdf.save("reporte.pdf");
+  pdf.save(`reporte_${usuario}_${fecha}.pdf`);
 }
 </script>
 
