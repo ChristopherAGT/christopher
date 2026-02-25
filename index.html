@@ -184,6 +184,7 @@ h3{
 </head>
 
 <body>
+
 <div class="container">
   <h1>CHRISTOPHER</h1>
 
@@ -232,6 +233,7 @@ h3{
 </div>
 
 <script>
+
 function formatoTiempo(segundos){
   let min=Math.floor(segundos/60);
   let sec=segundos%60;
@@ -316,25 +318,59 @@ function cerrarSesion(){
   window.location.href="login.html";
 }
 
+/* 🔥 FUNCIÓN CORREGIDA — YA NO SE CORTA EL PDF */
 async function exportarPDF(){
-  const popup = document.getElementById("popup");
-  popup.style.display = "block";
-  document.getElementById("overlay").style.display = "block";
 
-  const canvas = await html2canvas(popup, { scale: 2 });
+  const popup = document.getElementById("popup");
+  const overlay = document.getElementById("overlay");
+
+  popup.style.display = "block";
+  overlay.style.display = "block";
+
+  popup.style.height = "auto";
+  popup.style.maxHeight = "none";
+  popup.style.overflow = "visible";
+
+  await new Promise(resolve => setTimeout(resolve, 300));
+
+  const canvas = await html2canvas(popup, {
+    scale: 3,
+    useCORS: true,
+    scrollY: -window.scrollY,
+    backgroundColor: "#111c2e"
+  });
+
   const imgData = canvas.toDataURL("image/png");
-  const pdf = new jspdf.jsPDF("p", "mm", "a4");
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const margin = 10;
+  const imgWidth = pageWidth - (margin * 2);
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  let heightLeft = imgHeight;
+  let position = margin;
+
+  pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+  heightLeft -= (pageHeight - margin * 2);
+
+  while (heightLeft > 0) {
+    position = heightLeft - imgHeight + margin;
+    pdf.addPage();
+    pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+    heightLeft -= (pageHeight - margin * 2);
+  }
 
   const usuario = localStorage.getItem("usuario") || "Usuario";
   const fecha = new Date().toLocaleDateString('es-GT').replace(/\//g,'-');
 
-  const imgProps = pdf.getImageProperties(imgData);
-  const pdfWidth = pdf.internal.pageSize.getWidth() - 20; 
-  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-  pdf.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
   pdf.save(`reporte_${usuario}_${fecha}.pdf`);
 }
+
 </script>
 
 </body>
