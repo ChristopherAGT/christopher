@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel Ejecutivo</title>
 
+<!-- VALIDACIÓN DE LOGIN: si no hay usuario redirige -->
+<script>
+  const usuario = localStorage.getItem("usuario");
+  if(!usuario){
+    // Redirige directamente al login
+    window.location.href = "login.html";
+  }
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.min.js"></script>
 
@@ -176,16 +185,6 @@ h3{
 </head>
 
 <body>
-
-  <!-- VALIDACIÓN DE LOGIN -->
-  <script>
-  const usuario = localStorage.getItem("usuario");
-  if(!usuario){
-    alert("Debes iniciar sesión primero");
-    window.location.href = "login.html";
-  }
-  </script>
-  
 <div class="container">
   <h1>Panel Ejecutivo</h1>
 
@@ -226,7 +225,6 @@ h3{
 <button class="floating-btn" onclick="mostrarFormulas()">❔</button>
 
 <div class="overlay" id="overlay" onclick="cerrarPopup()"></div>
-
 <div class="popup" id="popup">
   <div id="contenido"></div>
   <button onclick="exportarPDF()">Exportar PDF</button>
