@@ -3,157 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel de Indicadores</title>
+<title>Panel Ejecutivo</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.min.js"></script>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #141e30, #243b55);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  color: white;
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0f2027,#1c2b40,#2c5364);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+  color:#e5e7eb;
 }
 
-.container {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(15px);
-  padding: 30px;
-  border-radius: 20px;
-  width: 95%;
-  max-width: 420px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+.container{
+  background:#111c2e;
+  padding:35px 30px;
+  border-radius:20px;
+  width:100%;
+  max-width:420px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.8);
+  border:1px solid rgba(255,255,255,0.05);
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 25px;
+h1{
+  text-align:center;
+  margin-bottom:25px;
+  color:#f1f5f9;
+  letter-spacing:1px;
 }
 
-.input-group {
-  margin-bottom: 15px;
+.input-group{
+  margin-bottom:18px;
+  display:flex;
+  flex-direction:column;
 }
 
-label {
-  font-size: 14px;
+label{
+  font-size:13px;
+  margin-bottom:6px;
+  color:#8faacb;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 8px;
-  border: none;
+input{
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #334155;
+  background:#0f172a;
+  color:#f8fafc;
+  font-size:14px;
+  transition:0.3s;
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  margin-top: 10px;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+input:focus{
+  border-color:#00c6ff;
+  box-shadow:0 0 0 2px rgba(0,198,255,0.3);
 }
 
-button:hover {
-  opacity: 0.9;
+button{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  border:none;
+  margin-top:15px;
+  background:linear-gradient(90deg,#1c3d5a,#00c6ff);
+  color:white;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-/* Lista de información con valores a la derecha */
-.lista {
-  list-style: none;
-  padding: 0;
-  margin: 5px 0;
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
-.lista li {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-  font-size: 16px;
+.btn-rojo{
+  background:linear-gradient(90deg,#7f1d1d,#b91c1c);
 }
 
-/* Resultados en cajitas coloridas */
-.resultado {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 8px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+.btn-rojo:hover{
+  box-shadow:0 10px 25px rgba(185,28,28,0.4);
 }
 
-.verde {
-  color: #00E5A8;
-  background: rgba(0,229,168,0.15);
+.lista{
+  list-style:none;
+  padding:0;
+  margin:5px 0;
 }
 
-.amarillo {
-  color: #FFC857;
-  background: rgba(255,200,87,0.15);
+.lista li{
+  display:flex;
+  justify-content:space-between;
+  padding:6px 0;
+  font-size:14px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
-.rojo {
-  color: #FF5C7A;
-  background: rgba(255,92,122,0.15);
+.resultado{
+  font-weight:bold;
+  font-size:14px;
+  margin-bottom:10px;
+  padding:10px 12px;
+  border-radius:10px;
+  text-align:center;
+  color:white;
 }
 
-.floating-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: #ffffff;
-  color: #243b55;
-  font-size: 20px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+.verde{background:linear-gradient(90deg,#065f46,#10b981);}
+.amarillo{background:linear-gradient(90deg,#92400e,#f59e0b);}
+.rojo{background:linear-gradient(90deg,#450a0a,#991b1b);}
+
+.floating-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#1c2b40,#00c6ff);
+  color:white;
+  font-size:20px;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 15px 30px rgba(0,0,0,0.7);
 }
 
-.popup {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  width: 330px;
-  max-width: 90%;
-  background: linear-gradient(135deg, #ffffff, #f2f6ff);
-  color: #1a1a1a;
-  padding: 20px;
-  border-radius: 18px;
-  display: none;
-  z-index: 1000;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+.popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:380px;
+  max-width:95%;
+  background:#111c2e;
+  padding:25px;
+  border-radius:20px;
+  display:none;
+  z-index:1001;
+  box-shadow:0 40px 80px rgba(0,0,0,0.9);
+  border:1px solid rgba(255,255,255,0.05);
 }
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  display: none;
-  z-index: 999;
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  display:none;
+  z-index:1000;
 }
 
-h3 {
-  margin-bottom: 10px;
-  text-align: left;
+h3{
+  margin-bottom:10px;
+  color:#f8fafc;
+}
+
+.fecha{
+  font-size:12px;
+  margin-bottom:10px;
+  color:#00c6ff;
+  text-align:right;
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
-  <h1>Panel de Indicadores</h1>
+  <h1>Panel Ejecutivo</h1>
 
   <div class="input-group">
     <label>Total de Órdenes</label>
@@ -186,6 +211,7 @@ h3 {
   </div>
 
   <button onclick="calcular()">Calcular</button>
+  <button class="btn-rojo" onclick="limpiarDatos()">Limpiar Datos</button>
 </div>
 
 <button class="floating-btn" onclick="mostrarFormulas()">❔</button>
@@ -195,38 +221,48 @@ h3 {
 <div class="popup" id="popup">
   <div id="contenido"></div>
   <button onclick="exportarPDF()">Exportar PDF</button>
+  <button class="btn-rojo" onclick="cerrarPopup()">Cerrar</button>
 </div>
 
 <script>
-function formatoTiempo(segundos) {
-  let min = Math.floor(segundos / 60);
-  let sec = segundos % 60;
-  return String(min).padStart(2,'0') + ":" + String(sec).padStart(2,'0');
+function formatoTiempo(segundos){
+  let min=Math.floor(segundos/60);
+  let sec=segundos%60;
+  return String(min).padStart(2,'0')+":"+String(sec).padStart(2,'0');
 }
 
-function formatoMoneda(valor) {
-  return valor.toLocaleString('es-GT', {style:'currency', currency:'GTQ', minimumFractionDigits:2});
+function formatoMoneda(valor){
+  return valor.toLocaleString('es-GT',{style:'currency',currency:'GTQ'});
 }
 
-function colorClase(valor) {
-  if(valor>=70) return 'verde';
-  if(valor>=40) return 'amarillo';
-  return 'rojo';
+function colorClase(valor){
+  if(valor>=70)return'verde';
+  if(valor>=40)return'amarillo';
+  return'rojo';
 }
 
-function calcular() {
-  let ordenes = parseFloat(document.getElementById("ordenes").value)||0;
-  let adicionales = parseFloat(document.getElementById("adicionales").value)||0;
-  let llamadas = parseFloat(document.getElementById("llamadas").value)||0;
-  let ventas = parseFloat(document.getElementById("ventas").value)||0;
-  let tiempo = parseFloat(document.getElementById("tiempo").value)||0;
-  let ticket = parseFloat(document.getElementById("ticket").value)||0;
+function limpiarDatos(){
+  document.querySelectorAll("input").forEach(i=>i.value="");
+}
 
-  let conversion = llamadas>0?Math.round((ordenes/llamadas)*100):0;
-  let adicionalesPorcentaje = ordenes>0?Math.round((adicionales/ordenes)*100):0;
-  let eficiencia = Math.round((conversion+adicionalesPorcentaje)/2);
+function fechaHoy(){
+  return new Date().toLocaleDateString('es-GT',{year:'numeric',month:'long',day:'numeric'});
+}
 
-  document.getElementById("contenido").innerHTML = `
+function calcular(){
+  let ordenes=parseFloat(document.getElementById("ordenes").value)||0;
+  let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
+  let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
+  let ventas=parseFloat(document.getElementById("ventas").value)||0;
+  let tiempo=parseFloat(document.getElementById("tiempo").value)||0;
+  let ticket=parseFloat(document.getElementById("ticket").value)||0;
+
+  let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
+  let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
+  let eficiencia=Math.round((conversion+adicionalesPorcentaje)/2);
+
+  document.getElementById("contenido").innerHTML=`
+    <div class="fecha">Fecha: ${fechaHoy()}</div>
     <h3>Información</h3>
     <ul class="lista">
       <li><span>Órdenes</span><span>${ordenes}</span></li>
@@ -238,17 +274,17 @@ function calcular() {
     </ul>
     <hr>
     <h3>Resultados</h3>
-    <div class="resultado ${colorClase(conversion)}">📈 Conversión: ${conversion}%</div>
-    <div class="resultado ${colorClase(adicionalesPorcentaje)}">➕ Adicionales: ${adicionalesPorcentaje}%</div>
-    <div class="resultado ${colorClase(eficiencia)}">⚡ Eficiencia: ${eficiencia}%</div>
+    <div class="resultado ${colorClase(conversion)}">Conversión: ${conversion}%</div>
+    <div class="resultado ${colorClase(adicionalesPorcentaje)}">Adicionales: ${adicionalesPorcentaje}%</div>
+    <div class="resultado ${colorClase(eficiencia)}">Eficiencia: ${eficiencia}%</div>
   `;
 
   document.getElementById("popup").style.display='block';
   document.getElementById("overlay").style.display='block';
 }
 
-function mostrarFormulas() {
-  document.getElementById("contenido").innerHTML = `
+function mostrarFormulas(){
+  document.getElementById("contenido").innerHTML=`
     <h3>Fórmulas</h3>
     <ul class="lista">
       <li>Conversión = (Órdenes ÷ Llamadas) × 100</li>
@@ -260,19 +296,18 @@ function mostrarFormulas() {
   document.getElementById("overlay").style.display='block';
 }
 
-function cerrarPopup() {
+function cerrarPopup(){
   document.getElementById("popup").style.display='none';
   document.getElementById("overlay").style.display='none';
 }
 
 async function exportarPDF(){
-  const { jsPDF } = window.jspdf;
   const popup=document.getElementById("popup");
   const canvas=await html2canvas(popup);
   const imgData=canvas.toDataURL("image/png");
-  const pdf=new jsPDF();
+  const pdf=new jspdf.jsPDF();
   pdf.addImage(imgData,"PNG",10,10,190,0);
-  pdf.save("reporte_indicadores.pdf");
+  pdf.save("reporte_panel_ejecutivo.pdf");
 }
 </script>
 
