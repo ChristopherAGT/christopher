@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora</title>
 
-<!-- VALIDACIÓN DE LOGIN -->
 <script>
-  const usuario = localStorage.getItem("usuario");
-  if(!usuario){
-    window.location.href = "login.html";
-  }
+const usuario = localStorage.getItem("usuario");
+if(!usuario){
+window.location.href = "login.html";
+}
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -20,94 +19,94 @@
 *{box-sizing:border-box;}
 
 body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#0f2027,#1c2b40,#2c5364);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  padding:20px;
-  color:#e5e7eb;
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f2027,#1c2b40,#2c5364);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+color:#e5e7eb;
 }
 
 .container{
-  background:#111c2e;
-  padding:35px 30px;
-  border-radius:20px;
-  width:100%;
-  max-width:420px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.8);
-  border:1px solid rgba(255,255,255,0.05);
+background:#111c2e;
+padding:35px 30px;
+border-radius:20px;
+width:100%;
+max-width:420px;
+box-shadow:0 30px 60px rgba(0,0,0,0.8);
+border:1px solid rgba(255,255,255,0.05);
 }
 
 h1{
-  text-align:center;
-  margin-bottom:25px;
-  color:#f1f5f9;
-  letter-spacing:1px;
+text-align:center;
+margin-bottom:25px;
+color:#f1f5f9;
+letter-spacing:1px;
 }
 
 .input-group{
-  margin-bottom:18px;
-  display:flex;
-  flex-direction:column;
+margin-bottom:18px;
+display:flex;
+flex-direction:column;
 }
 
 label{
-  font-size:13px;
-  margin-bottom:6px;
-  color:#8faacb;
+font-size:13px;
+margin-bottom:6px;
+color:#8faacb;
 }
 
 input{
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #334155;
-  background:#0f172a;
-  color:#f8fafc;
-  font-size:14px;
+padding:12px;
+border-radius:10px;
+border:1px solid #334155;
+background:#0f172a;
+color:#f8fafc;
+font-size:14px;
 }
 
 button{
-  width:100%;
-  padding:13px;
-  border-radius:12px;
-  border:none;
-  margin-top:15px;
-  background:linear-gradient(90deg,#1c3d5a,#00c6ff);
-  color:white;
-  font-weight:bold;
-  font-size:15px;
-  cursor:pointer;
+width:100%;
+padding:13px;
+border-radius:12px;
+border:none;
+margin-top:15px;
+background:linear-gradient(90deg,#1c3d5a,#00c6ff);
+color:white;
+font-weight:bold;
+font-size:15px;
+cursor:pointer;
 }
 
 .btn-rojo{
-  background:linear-gradient(90deg,#7f1d1d,#b91c1c);
+background:linear-gradient(90deg,#7f1d1d,#b91c1c);
 }
 
 .lista{
-  list-style:none;
-  padding:0;
-  margin:5px 0;
+list-style:none;
+padding:0;
+margin:5px 0;
 }
 
 .lista li{
-  display:flex;
-  justify-content:space-between;
-  padding:6px 0;
-  font-size:14px;
-  border-bottom:1px solid rgba(255,255,255,0.05);
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+font-size:14px;
+border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
 .resultado{
-  font-weight:bold;
-  font-size:14px;
-  margin-bottom:10px;
-  padding:10px 12px;
-  border-radius:10px;
-  text-align:center;
-  color:white;
+font-weight:bold;
+font-size:14px;
+margin-bottom:10px;
+padding:10px 12px;
+border-radius:10px;
+text-align:center;
+color:white;
 }
 
 .verde{background:linear-gradient(90deg,#065f46,#10b981);}
@@ -115,53 +114,54 @@ button{
 .rojo{background:linear-gradient(90deg,#450a0a,#991b1b);}
 
 .floating-btn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#1c2b40,#00c6ff);
-  color:white;
-  font-size:20px;
-  border:none;
-  cursor:pointer;
+position:fixed;
+bottom:20px;
+right:20px;
+width:45px;
+height:45px;
+border-radius:50%;
+background:linear-gradient(135deg,#1c2b40,#00c6ff);
+color:white;
+font-size:20px;
+border:none;
+cursor:pointer;
 }
 
 .popup{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:380px;
-  max-width:95%;
-  background:#111c2e;
-  padding:25px;
-  border-radius:20px;
-  display:none;
-  z-index:1001;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:380px;
+max-width:95%;
+background:#111c2e;
+padding:25px;
+border-radius:20px;
+display:none;
+z-index:1001;
 }
 
 .overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  display:none;
-  z-index:1000;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.75);
+display:none;
+z-index:1000;
 }
 
-/* 🔥 FECHA ACTUALIZADA */
 .fecha{
-  font-size:12px;
-  margin-bottom:5px;
-  text-align:right;
+font-size:12px;
+margin-bottom:5px;
+text-align:right;
 }
+
 .fecha strong{
-  color:#00c6ff; /* Azul */
-  font-weight:600;
+color:#00c6ff;
+font-weight:600;
 }
+
 .fecha span{
-  color:#ffffff; /* Blanco */
+color:#ffffff;
 }
 </style>
 </head>
@@ -169,192 +169,194 @@ button{
 <body>
 
 <div class="container">
-  <h1>DOMINO'S PIZZA</h1>
+<h1>DOMINO'S PIZZA</h1>
 
-  <div class="input-group">
-    <label>Total de Órdenes</label>
-    <input type="number" id="ordenes">
-  </div>
+<div class="input-group">
+<label>Total de Órdenes</label>
+<input type="number" id="ordenes">
+</div>
 
-  <div class="input-group">
-    <label>Total de Adicionales</label>
-    <input type="number" id="adicionales">
-  </div>
+<div class="input-group">
+<label>Total de Adicionales</label>
+<input type="number" id="adicionales">
+</div>
 
-  <div class="input-group">
-    <label>Total de Llamadas</label>
-    <input type="number" id="llamadas">
-  </div>
+<div class="input-group">
+<label>Total de Llamadas</label>
+<input type="number" id="llamadas">
+</div>
 
-  <div class="input-group">
-    <label>Ventas (Q)</label>
-    <input type="number" id="ventas">
-  </div>
+<div class="input-group">
+<label>Ventas (Q)</label>
+<input type="number" id="ventas">
+</div>
 
-  <!-- 🔥 CAMBIO: Tiempo en formato mm:ss -->
-  <div class="input-group">
-    <label>Tiempo en Llamadas (mm:ss)</label>
-    <input type="text" id="tiempo" placeholder="ej. 03:20">
-  </div>
+<div class="input-group">
+<label>Tiempo en Llamadas (mm:ss)</label>
+<input type="text" id="tiempo" placeholder="ej. 03:20">
+</div>
 
-  <div class="input-group">
-    <label>Ticket Promedio (Q)</label>
-    <input type="number" id="ticket">
-  </div>
+<button onclick="calcular()">Calcular</button>
+<button class="btn-rojo" onclick="limpiarDatos()">Limpiar Datos</button>
+<button class="btn-rojo" onclick="cerrarSesion()">Cerrar Sesión</button>
 
-  <button onclick="calcular()">Calcular</button>
-  <button class="btn-rojo" onclick="limpiarDatos()">Limpiar Datos</button>
-  <button class="btn-rojo" onclick="cerrarSesion()">Cerrar Sesión</button>
 </div>
 
 <button class="floating-btn" onclick="mostrarFormulas()">❔</button>
 
 <div class="overlay" id="overlay" onclick="cerrarPopup()"></div>
+
 <div class="popup" id="popup">
-  <div id="contenido"></div>
-  <button onclick="exportarPDF()">Exportar PDF</button>
-  <button class="btn-rojo" onclick="cerrarPopup()">Cerrar</button>
+<div id="contenido"></div>
+<button onclick="exportarPDF()">Exportar PDF</button>
+<button class="btn-rojo" onclick="cerrarPopup()">Cerrar</button>
 </div>
 
 <script>
 
 function formatoTiempo(segundos){
-  let min=Math.floor(segundos/60);
-  let sec=segundos%60;
-  return String(min).padStart(2,'0')+":"+String(sec).padStart(2,'0');
+let min=Math.floor(segundos/60);
+let sec=segundos%60;
+return String(min).padStart(2,'0')+":"+String(sec).padStart(2,'0');
 }
 
 function formatoMoneda(valor){
-  return valor.toLocaleString('es-GT',{style:'currency',currency:'GTQ'});
+return valor.toLocaleString('es-GT',{style:'currency',currency:'GTQ'});
 }
 
 function colorClase(valor){
-  if(valor>=70)return'verde';
-  if(valor>=40)return'amarillo';
-  return'rojo';
+if(valor>=70)return'verde';
+if(valor>=40)return'amarillo';
+return'rojo';
 }
 
 function limpiarDatos(){
-  document.querySelectorAll("input").forEach(i=>i.value="");
+document.querySelectorAll("input").forEach(i=>i.value="");
 }
 
 function fechaHoy(){
-  return new Date().toLocaleDateString('es-GT',{year:'numeric',month:'long',day:'numeric'});
+return new Date().toLocaleDateString('es-GT',{year:'numeric',month:'long',day:'numeric'});
 }
 
 function calcular(){
-  let ordenes=parseFloat(document.getElementById("ordenes").value)||0;
-  let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
-  let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
-  let ventas=parseFloat(document.getElementById("ventas").value)||0;
-  let ticket=parseFloat(document.getElementById("ticket").value)||0;
 
-  // 🔥 CAMBIO: convertir mm:ss a segundos
-  let tiempoInput = document.getElementById("tiempo").value || "00:00";
-  let partes = tiempoInput.split(":");
-  let tiempo = 0;
-  if(partes.length === 2){
-    tiempo = parseInt(partes[0],10)*60 + parseInt(partes[1],10);
-  }
+let ordenes=parseFloat(document.getElementById("ordenes").value)||0;
+let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
+let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
+let ventas=parseFloat(document.getElementById("ventas").value)||0;
 
-  let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
-  let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
-  let eficiencia=Math.round((conversion+adicionalesPorcentaje)/2);
+let tiempoInput=document.getElementById("tiempo").value||"00:00";
+let partes=tiempoInput.split(":");
+let tiempo=0;
 
-  const usuario = localStorage.getItem("usuario") || "Usuario";
+if(partes.length===2){
+tiempo=parseInt(partes[0],10)*60+parseInt(partes[1],10);
+}
 
-  // 🔵 Encabezado con estilo azul/blanco
-  document.getElementById("contenido").innerHTML=`
-    <div class="fecha">
-      <strong>Agente:</strong> <span>${usuario}</span>
-    </div>
-    <div class="fecha">
-      <strong>Fecha:</strong> <span>${fechaHoy()}</span>
-    </div>
-    <h3>Información</h3>
-    <ul class="lista">
-      <li><span>Total de Órdenes</span><span>${ordenes}</span></li>
-      <li><span>Total de Adicionales</span><span>${adicionales}</span></li>
-      <li><span>Total de Llamadas</span><span>${llamadas}</span></li>
-      <li><span>Total de Ventas</span><span>${formatoMoneda(ventas)}</span></li>
-      <li><span>Ticket Promedio</span><span>${formatoMoneda(ticket)}</span></li>
-      <li><span>Tiempo (AHT)</span><span>${formatoTiempo(tiempo)}</span></li>
-    </ul>
-    <hr>
-    <h3>Resultados</h3>
-    <div class="resultado ${colorClase(conversion)}">📈 Conversión: ${conversion}%</div>
-    <div class="resultado ${colorClase(adicionalesPorcentaje)}">➕ Adicionales: ${adicionalesPorcentaje}%</div>
-    <div class="resultado ${colorClase(eficiencia)}">⚡ Eficiencia: ${eficiencia}%</div>
-  `;
+let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
+let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
+let eficiencia=Math.round((conversion+adicionalesPorcentaje)/2);
 
-  popup.style.display='block';
-  overlay.style.display='block';
+let ticket=ordenes>0?(ventas/ordenes):0;
+ticket=Math.round(ticket*100)/100;
+
+const usuario=localStorage.getItem("usuario")||"Usuario";
+
+document.getElementById("contenido").innerHTML=`
+<div class="fecha">
+<strong>Agente:</strong> <span>${usuario}</span>
+</div>
+
+<div class="fecha">
+<strong>Fecha:</strong> <span>${fechaHoy()}</span>
+</div>
+
+<h3>Información</h3>
+
+<ul class="lista">
+<li><span>Total de Órdenes</span><span>${ordenes}</span></li>
+<li><span>Total de Adicionales</span><span>${adicionales}</span></li>
+<li><span>Total de Llamadas</span><span>${llamadas}</span></li>
+<li><span>Total de Ventas</span><span>${formatoMoneda(ventas)}</span></li>
+<li><span>Ticket Promedio</span><span>${formatoMoneda(ticket)}</span></li>
+<li><span>Tiempo (AHT)</span><span>${formatoTiempo(tiempo)}</span></li>
+</ul>
+
+<hr>
+
+<h3>Resultados</h3>
+
+<div class="resultado ${colorClase(conversion)}">📈 Conversión: ${conversion}%</div>
+<div class="resultado ${colorClase(adicionalesPorcentaje)}">➕ Adicionales: ${adicionalesPorcentaje}%</div>
+<div class="resultado ${colorClase(eficiencia)}">⚡ Eficiencia: ${eficiencia}%</div>
+`;
+
+popup.style.display='block';
+overlay.style.display='block';
 }
 
 function mostrarFormulas(){
-  document.getElementById("contenido").innerHTML=`
-    <h3>Fórmulas</h3>
-    <ul class="lista">
-      <li>Conversión = (Órdenes ÷ Llamadas) × 100</li>
-      <li>Adicionales = (Adicionales ÷ Órdenes) × 100</li>
-      <li>Eficiencia = (Conversión + Adicionales) ÷ 2</li>
-    </ul>
-  `;
-  popup.style.display='block';
-  overlay.style.display='block';
+document.getElementById("contenido").innerHTML=`
+<h3>Fórmulas</h3>
+
+<ul class="lista">
+<li>Conversión = (Órdenes ÷ Llamadas) × 100</li>
+<li>Adicionales = (Adicionales ÷ Órdenes) × 100</li>
+<li>Eficiencia = (Conversión + Adicionales) ÷ 2</li>
+<li>Ticket Promedio = Ventas ÷ Órdenes</li>
+</ul>
+`;
+
+popup.style.display='block';
+overlay.style.display='block';
 }
 
 function cerrarPopup(){
-  popup.style.display='none';
-  overlay.style.display='none';
+popup.style.display='none';
+overlay.style.display='none';
 }
 
 function cerrarSesion(){
-  localStorage.removeItem("usuario");
-  window.location.href="login.html";
+localStorage.removeItem("usuario");
+window.location.href="login.html";
 }
 
-/* 🔥 EXPORTAR EN UNA SOLA HOJA CENTRADO */
 async function exportarPDF(){
 
-  const popup = document.getElementById("popup");
+const popup=document.getElementById("popup");
 
-  popup.style.display = "block";
-  popup.style.height = "auto";
-  popup.style.maxHeight = "none";
-  popup.style.overflow = "visible";
+await new Promise(resolve=>setTimeout(resolve,200));
 
-  await new Promise(resolve => setTimeout(resolve, 200));
+const canvas=await html2canvas(popup,{
+scale:2,
+backgroundColor:"#111c2e"
+});
 
-  const canvas = await html2canvas(popup, {
-    scale: 2,
-    backgroundColor: "#111c2e"
-  });
+const imgData=canvas.toDataURL("image/png");
 
-  const imgData = canvas.toDataURL("image/png");
+const { jsPDF }=window.jspdf;
+const pdf=new jsPDF("p","mm","a4");
 
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF("p","mm","a4");
+const pageWidth=pdf.internal.pageSize.getWidth();
+const pageHeight=pdf.internal.pageSize.getHeight();
 
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
+const margin=15;
 
-  const margin = 15;
-  const imgWidth = pageWidth - (margin * 2);
-  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+const imgWidth=pageWidth-(margin*2);
+const imgHeight=(canvas.height*imgWidth)/canvas.width;
 
-  const finalHeight = imgHeight > (pageHeight - margin * 2)
-      ? (pageHeight - margin * 2)
-      : imgHeight;
+const finalHeight=imgHeight>(pageHeight-margin*2)
+? (pageHeight-margin*2)
+: imgHeight;
 
-  const y = (pageHeight - finalHeight) / 2;
+const y=(pageHeight-finalHeight)/2;
 
-  pdf.addImage(imgData,"PNG",margin,y,imgWidth,finalHeight);
+pdf.addImage(imgData,"PNG",margin,y,imgWidth,finalHeight);
 
-  const usuario = localStorage.getItem("usuario") || "Usuario";
-  const fecha = new Date().toLocaleDateString('es-GT').replace(/\//g,'-');
+const usuario=localStorage.getItem("usuario")||"Usuario";
+const fecha=new Date().toLocaleDateString('es-GT').replace(/\//g,'-');
 
-  pdf.save(`reporte_${usuario}_${fecha}.pdf`);
+pdf.save(`reporte_${usuario}_${fecha}.pdf`);
 }
 
 </script>
