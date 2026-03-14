@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora</title>
+<title>Domino's Calculadora</title>
 
 <script>
 const usuario = localStorage.getItem("usuario");
@@ -16,35 +16,59 @@ window.location.href = "login.html";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-*{box-sizing:border-box;}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#0f2027,#1c2b40,#2c5364);
+
+/* COLORES DOMINOS */
+
+background:linear-gradient(135deg,#e31837,#006491);
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
 padding:20px;
-color:#e5e7eb;
+color:white;
+overflow:hidden;
+}
+
+/* LOGO FONDO */
+
+body::before{
+content:"";
+position:fixed;
+top:50%;
+left:50%;
+width:600px;
+height:600px;
+background:url("https://upload.wikimedia.org/wikipedia/commons/7/74/Dominos_pizza_logo.svg") center/contain no-repeat;
+opacity:0.08;
+transform:translate(-50%,-50%);
+pointer-events:none;
 }
 
 .container{
-background:#111c2e;
+
+background:white;
+color:#111;
 padding:35px 30px;
 border-radius:20px;
 width:100%;
 max-width:420px;
-box-shadow:0 30px 60px rgba(0,0,0,0.8);
-border:1px solid rgba(255,255,255,0.05);
+box-shadow:0 25px 60px rgba(0,0,0,0.35);
 }
 
 h1{
 text-align:center;
 margin-bottom:25px;
-color:#f1f5f9;
+color:#006491;
 letter-spacing:1px;
+font-weight:800;
 }
 
 .input-group{
@@ -56,15 +80,14 @@ flex-direction:column;
 label{
 font-size:13px;
 margin-bottom:6px;
-color:#8faacb;
+color:#555;
 }
 
 input{
 padding:12px;
 border-radius:10px;
-border:1px solid #334155;
-background:#0f172a;
-color:#f8fafc;
+border:1px solid #ddd;
+background:#f8f8f8;
 font-size:14px;
 }
 
@@ -73,16 +96,21 @@ width:100%;
 padding:13px;
 border-radius:12px;
 border:none;
-margin-top:15px;
-background:linear-gradient(90deg,#1c3d5a,#00c6ff);
+margin-top:12px;
+background:#006491;
 color:white;
 font-weight:bold;
 font-size:15px;
 cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+opacity:0.9;
 }
 
 .btn-rojo{
-background:linear-gradient(90deg,#7f1d1d,#b91c1c);
+background:#e31837;
 }
 
 .lista{
@@ -96,7 +124,7 @@ display:flex;
 justify-content:space-between;
 padding:6px 0;
 font-size:14px;
-border-bottom:1px solid rgba(255,255,255,0.05);
+border-bottom:1px solid rgba(0,0,0,0.05);
 }
 
 .resultado{
@@ -109,22 +137,31 @@ text-align:center;
 color:white;
 }
 
-.verde{background:linear-gradient(90deg,#065f46,#10b981);}
-.amarillo{background:linear-gradient(90deg,#92400e,#f59e0b);}
-.rojo{background:linear-gradient(90deg,#450a0a,#991b1b);}
+.verde{
+background:#16a34a;
+}
+
+.amarillo{
+background:#f59e0b;
+}
+
+.rojo{
+background:#e31837;
+}
 
 .floating-btn{
 position:fixed;
 bottom:20px;
 right:20px;
-width:45px;
-height:45px;
+width:50px;
+height:50px;
 border-radius:50%;
-background:linear-gradient(135deg,#1c2b40,#00c6ff);
+background:#006491;
 color:white;
-font-size:20px;
+font-size:22px;
 border:none;
 cursor:pointer;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
 .popup{
@@ -134,7 +171,8 @@ left:50%;
 transform:translate(-50%,-50%);
 width:380px;
 max-width:95%;
-background:#111c2e;
+background:white;
+color:#111;
 padding:25px;
 border-radius:20px;
 display:none;
@@ -144,7 +182,7 @@ z-index:1001;
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,0.75);
+background:rgba(0,0,0,0.6);
 display:none;
 z-index:1000;
 }
@@ -156,20 +194,17 @@ text-align:right;
 }
 
 .fecha strong{
-color:#00c6ff;
-font-weight:600;
+color:#006491;
 }
 
-.fecha span{
-color:#ffffff;
-}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h1>DOMINO'S PIZZA</h1>
+
+<h1>🍕 DOMINO'S PIZZA</h1>
 
 <div class="input-group">
 <label>Total de Órdenes</label>
@@ -213,6 +248,8 @@ color:#ffffff;
 </div>
 
 <script>
+
+/* MISMO JS QUE TENIAS */
 
 function formatoTiempo(segundos){
 let min=Math.floor(segundos/60);
@@ -264,11 +301,11 @@ const usuario=localStorage.getItem("usuario")||"Usuario";
 
 document.getElementById("contenido").innerHTML=`
 <div class="fecha">
-<strong>Agente:</strong> <span>${usuario}</span>
+<strong>Agente:</strong> ${usuario}
 </div>
 
 <div class="fecha">
-<strong>Fecha:</strong> <span>${fechaHoy()}</span>
+<strong>Fecha:</strong> ${fechaHoy()}
 </div>
 
 <h3>Información</h3>
@@ -286,9 +323,9 @@ document.getElementById("contenido").innerHTML=`
 
 <h3>Resultados</h3>
 
-<div class="resultado ${colorClase(conversion)}">📈 Conversión: ${conversion}%</div>
-<div class="resultado ${colorClase(adicionalesPorcentaje)}">➕ Adicionales: ${adicionalesPorcentaje}%</div>
-<div class="resultado ${colorClase(eficiencia)}">⚡ Eficiencia: ${eficiencia}%</div>
+<div class="resultado ${colorClase(conversion)}">Conversión: ${conversion}%</div>
+<div class="resultado ${colorClase(adicionalesPorcentaje)}">Adicionales: ${adicionalesPorcentaje}%</div>
+<div class="resultado ${colorClase(eficiencia)}">Eficiencia: ${eficiencia}%</div>
 `;
 
 popup.style.display='block';
@@ -319,44 +356,6 @@ overlay.style.display='none';
 function cerrarSesion(){
 localStorage.removeItem("usuario");
 window.location.href="login.html";
-}
-
-async function exportarPDF(){
-
-const popup=document.getElementById("popup");
-
-await new Promise(resolve=>setTimeout(resolve,200));
-
-const canvas=await html2canvas(popup,{
-scale:2,
-backgroundColor:"#111c2e"
-});
-
-const imgData=canvas.toDataURL("image/png");
-
-const { jsPDF }=window.jspdf;
-const pdf=new jsPDF("p","mm","a4");
-
-const pageWidth=pdf.internal.pageSize.getWidth();
-const pageHeight=pdf.internal.pageSize.getHeight();
-
-const margin=15;
-
-const imgWidth=pageWidth-(margin*2);
-const imgHeight=(canvas.height*imgWidth)/canvas.width;
-
-const finalHeight=imgHeight>(pageHeight-margin*2)
-? (pageHeight-margin*2)
-: imgHeight;
-
-const y=(pageHeight-finalHeight)/2;
-
-pdf.addImage(imgData,"PNG",margin,y,imgWidth,finalHeight);
-
-const usuario=localStorage.getItem("usuario")||"Usuario";
-const fecha=new Date().toLocaleDateString('es-GT').replace(/\//g,'-');
-
-pdf.save(`reporte_${usuario}_${fecha}.pdf`);
 }
 
 </script>
