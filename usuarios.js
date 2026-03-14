@@ -6,7 +6,7 @@ const usuarios = [
   { nombre: "Nery Orlando Us Villatoro", password: "dominos" },
   { nombre: "Christopher Alexander Chivalan Tzoy", password: "dominos" },
   { nombre: "Dulce Pamela Ixtecoc Barrientos", password: "dominos" },
-  { nombre: "INVITADO", password: "DOMINOS" },
+  { nombre: "Maybelin Xchel López Baten", password: "dominos" },
   { nombre: "bubu", password: "bubu" },
   { nombre: "Christopher Chivalan", password: "dominos" }
 ];
