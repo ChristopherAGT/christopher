@@ -182,7 +182,7 @@ z-index:1001;
 overflow:hidden;
 }
 
-/* LOGO MARCA DE AGUA EN RESULTADOS */
+/* LOGO MARCA DE AGUA */
 
 .popup::before{
 content:"";
@@ -196,8 +196,6 @@ background:url("https://upload.wikimedia.org/wikipedia/commons/7/74/Dominos_pizz
 opacity:0.06;
 pointer-events:none;
 }
-
-/* CONTENIDO SOBRE EL LOGO */
 
 .popup *{
 position:relative;
@@ -387,6 +385,43 @@ function cerrarSesion(){
 localStorage.removeItem("usuario");
 window.location.href="login.html";
 }
+
+/* FORMATO AUTOMATICO TIEMPO */
+
+const campoTiempo = document.getElementById("tiempo");
+
+campoTiempo.addEventListener("input", function(e){
+
+let valor = e.target.value.replace(/\D/g,'');
+
+if(valor.length > 4){
+valor = valor.slice(0,4);
+}
+
+let min = valor.slice(0, valor.length-2);
+let sec = valor.slice(-2);
+
+if(min === "") min = "0";
+
+sec = sec || "00";
+
+if(parseInt(sec) > 59){
+sec = "59";
+}
+
+e.target.value = String(min).padStart(2,'0') + ":" + sec.padStart(2,'0');
+
+});
+
+/* ENTER PARA CALCULAR */
+
+document.addEventListener("keydown", function(e){
+
+if(e.key === "Enter"){
+calcular();
+}
+
+});
 
 /* EXPORTAR PDF */
 
