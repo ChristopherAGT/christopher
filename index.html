@@ -24,9 +24,6 @@ box-sizing:border-box;
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-
-/* COLORES DOMINOS */
-
 background:linear-gradient(135deg,#e31837,#006491);
 display:flex;
 justify-content:center;
@@ -52,8 +49,9 @@ transform:translate(-50%,-50%);
 pointer-events:none;
 }
 
-.container{
+/* CONTENEDOR */
 
+.container{
 background:white;
 color:#111;
 padding:35px 30px;
@@ -149,6 +147,8 @@ background:#f59e0b;
 background:#e31837;
 }
 
+/* BOTON FLOTANTE */
+
 .floating-btn{
 position:fixed;
 bottom:20px;
@@ -164,6 +164,8 @@ cursor:pointer;
 box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
+/* POPUP */
+
 .popup{
 position:fixed;
 top:50%;
@@ -177,6 +179,29 @@ padding:25px;
 border-radius:20px;
 display:none;
 z-index:1001;
+overflow:hidden;
+}
+
+/* LOGO MARCA DE AGUA EN RESULTADOS */
+
+.popup::before{
+content:"";
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:220px;
+height:220px;
+background:url("https://upload.wikimedia.org/wikipedia/commons/7/74/Dominos_pizza_logo.svg") center/contain no-repeat;
+opacity:0.06;
+pointer-events:none;
+}
+
+/* CONTENIDO SOBRE EL LOGO */
+
+.popup *{
+position:relative;
+z-index:2;
 }
 
 .overlay{
@@ -249,8 +274,6 @@ color:#006491;
 
 <script>
 
-/* MISMO JS QUE TENIAS */
-
 function formatoTiempo(segundos){
 let min=Math.floor(segundos/60);
 let sec=segundos%60;
@@ -300,6 +323,7 @@ ticket=Math.round(ticket*100)/100;
 const usuario=localStorage.getItem("usuario")||"Usuario";
 
 document.getElementById("contenido").innerHTML=`
+
 <div class="fecha">
 <strong>Agente:</strong> ${usuario}
 </div>
@@ -326,14 +350,18 @@ document.getElementById("contenido").innerHTML=`
 <div class="resultado ${colorClase(conversion)}">Conversión: ${conversion}%</div>
 <div class="resultado ${colorClase(adicionalesPorcentaje)}">Adicionales: ${adicionalesPorcentaje}%</div>
 <div class="resultado ${colorClase(eficiencia)}">Eficiencia: ${eficiencia}%</div>
+
 `;
 
 popup.style.display='block';
 overlay.style.display='block';
+
 }
 
 function mostrarFormulas(){
+
 document.getElementById("contenido").innerHTML=`
+
 <h3>Fórmulas</h3>
 
 <ul class="lista">
@@ -342,10 +370,12 @@ document.getElementById("contenido").innerHTML=`
 <li>Eficiencia = (Conversión + Adicionales) ÷ 2</li>
 <li>Ticket Promedio = Ventas ÷ Órdenes</li>
 </ul>
+
 `;
 
 popup.style.display='block';
 overlay.style.display='block';
+
 }
 
 function cerrarPopup(){
@@ -356,6 +386,26 @@ overlay.style.display='none';
 function cerrarSesion(){
 localStorage.removeItem("usuario");
 window.location.href="login.html";
+}
+
+/* EXPORTAR PDF */
+
+async function exportarPDF(){
+
+const { jsPDF } = window.jspdf;
+
+let area=document.getElementById("contenido");
+
+const canvas=await html2canvas(area);
+
+const img=canvas.toDataURL("image/png");
+
+const pdf=new jsPDF();
+
+pdf.addImage(img,'PNG',10,10,180,0);
+
+pdf.save("reporte_dominos.pdf");
+
 }
 
 </script>
