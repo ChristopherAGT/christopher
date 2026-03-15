@@ -111,6 +111,10 @@ opacity:0.9;
 background:#e31837;
 }
 
+.btn-gris{
+background:#6b7280;
+}
+
 .lista{
 list-style:none;
 padding:0;
@@ -268,8 +272,11 @@ color:#006491;
 
 <div class="popup" id="popup">
 <div id="contenido"></div>
+
 <button onclick="exportarPDF()">Exportar PDF</button>
+<button class="btn-gris" onclick="copiarTexto()">Copiar</button>
 <button class="btn-rojo" onclick="cerrarPopup()">Cerrar</button>
+
 </div>
 
 <script>
@@ -324,13 +331,8 @@ const usuario=localStorage.getItem("usuario")||"Usuario";
 
 document.getElementById("contenido").innerHTML=`
 
-<div class="fecha">
-<strong>Agente:</strong> ${usuario}
-</div>
-
-<div class="fecha">
-<strong>Fecha:</strong> ${fechaHoy()}
-</div>
+<div class="fecha"><strong>Agente:</strong> ${usuario}</div>
+<div class="fecha"><strong>Fecha:</strong> ${fechaHoy()}</div>
 
 <h3>Información</h3>
 
@@ -405,6 +407,22 @@ const pdf=new jsPDF();
 pdf.addImage(img,'PNG',10,10,180,0);
 
 pdf.save("reporte_dominos.pdf");
+
+}
+
+/* COPIAR TEXTO */
+
+function copiarTexto(){
+
+let area=document.getElementById("contenido");
+
+let texto=area.innerText;
+
+navigator.clipboard.writeText(texto).then(()=>{
+
+alert("Información copiada");
+
+});
 
 }
 
