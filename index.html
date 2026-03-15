@@ -310,7 +310,6 @@ eficiencia
 };
 
 document.getElementById("contenido").innerHTML=`
-
 <div class="fecha"><strong>Agente:</strong> ${usuario}</div>
 <div class="fecha"><strong>Fecha:</strong> ${fechaHoy()}</div>
 
@@ -338,48 +337,38 @@ popup.style.display='block';
 overlay.style.display='block';
 }
 
-function generarTexto(){
-
-let r=datosReporte;
-
-return `🍕 DOMINO'S REPORTE
-
-👤 Agente: ${r.usuario}
-📅 Fecha: ${fechaHoy()}
-
-📊 INFORMACIÓN
-• Órdenes: ${r.ordenes}
-• Adicionales: ${r.adicionales}
-• Llamadas: ${r.llamadas}
-• Ventas: ${formatoMoneda(r.ventas)}
-• Ticket Promedio: ${formatoMoneda(r.ticket)}
-• AHT: ${r.tiempo}
-
-📈 RESULTADOS
-• Conversión: ${r.conversion}%
-• Adicionales: ${r.adicionalesPorcentaje}%
-• Eficiencia: ${r.eficiencia}%`;
-}
-
 function copiarTexto(){
-navigator.clipboard.writeText(generarTexto());
+navigator.clipboard.writeText(document.getElementById("contenido").innerText);
 alert("Reporte copiado");
 }
 
 function enviarWhatsApp(){
 
-let texto=encodeURIComponent(generarTexto());
+let r = datosReporte;
+
+let texto =
+"🍕 DOMINO'S REPORTE%0A%0A"+
+"👤 Agente: "+r.usuario+"%0A"+
+"📅 Fecha: "+fechaHoy()+"%0A%0A"+
+"📊 INFORMACIÓN%0A"+
+"• Órdenes: "+r.ordenes+"%0A"+
+"• Adicionales: "+r.adicionales+"%0A"+
+"• Llamadas: "+r.llamadas+"%0A"+
+"• Ventas: "+formatoMoneda(r.ventas)+"%0A"+
+"• Ticket Promedio: "+formatoMoneda(r.ticket)+"%0A"+
+"• AHT: "+r.tiempo+"%0A%0A"+
+"📈 RESULTADOS%0A"+
+"• Conversión: "+r.conversion+"%0A"+
+"• Adicionales: "+r.adicionalesPorcentaje+"%0A"+
+"• Eficiencia: "+r.eficiencia;
 
 window.open("https://wa.me/?text="+texto,"_blank");
 
 }
 
 function mostrarFormulas(){
-
 document.getElementById("contenido").innerHTML=`
-
 <h3>Fórmulas</h3>
-
 <ul class="lista">
 <li>Conversión = (Órdenes ÷ Llamadas) × 100</li>
 <li>Adicionales = (Adicionales ÷ Órdenes) × 100</li>
@@ -387,7 +376,6 @@ document.getElementById("contenido").innerHTML=`
 <li>Ticket Promedio = Ventas ÷ Órdenes</li>
 </ul>
 `;
-
 popup.style.display='block';
 overlay.style.display='block';
 }
