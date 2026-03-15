@@ -8,7 +8,7 @@
 <script>
 const usuario = localStorage.getItem("usuario");
 if(!usuario){
-window.location.href = "login.html";
+  window.location.href = "login.html";
 }
 </script>
 
@@ -221,7 +221,7 @@ text-align:right;
 
 <div class="input-group">
 <label>Tiempo en Llamadas (mm:ss)</label>
-<input type="text" id="tiempo" placeholder="ej. 03:20">
+<input type="text" id="tiempo" placeholder="03:20">
 </div>
 
 <button onclick="calcular()">Calcular</button>
@@ -240,7 +240,7 @@ text-align:right;
 
 <button onclick="exportarPDF()">Exportar PDF</button>
 <button class="btn-gris" onclick="copiarTexto()">Copiar</button>
-<button class="btn-verde" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+<button class="btn-verde" onclick="compartirImagen()">Compartir Reporte</button>
 <button class="btn-rojo" onclick="cerrarPopup()">Cerrar</button>
 
 </div>
@@ -342,27 +342,34 @@ navigator.clipboard.writeText(document.getElementById("contenido").innerText);
 alert("Reporte copiado");
 }
 
-function enviarWhatsApp(){
+async function compartirImagen(){
 
-let r = datosReporte;
+const area = document.getElementById("contenido");
 
-let texto =
-"🍕 DOMINO'S REPORTE%0A%0A"+
-"👤 Agente: "+r.usuario+"%0A"+
-"📅 Fecha: "+fechaHoy()+"%0A%0A"+
-"📊 INFORMACIÓN%0A"+
-"• Órdenes: "+r.ordenes+"%0A"+
-"• Adicionales: "+r.adicionales+"%0A"+
-"• Llamadas: "+r.llamadas+"%0A"+
-"• Ventas: "+formatoMoneda(r.ventas)+"%0A"+
-"• Ticket Promedio: "+formatoMoneda(r.ticket)+"%0A"+
-"• AHT: "+r.tiempo+"%0A%0A"+
-"📈 RESULTADOS%0A"+
-"• Conversión: "+r.conversion+"%0A"+
-"• Adicionales: "+r.adicionalesPorcentaje+"%0A"+
-"• Eficiencia: "+r.eficiencia;
+const canvas = await html2canvas(area);
 
-window.open("https://wa.me/?text="+texto,"_blank");
+canvas.toBlob(async function(blob){
+
+const file = new File([blob], "reporte_dominos.png", { type: "image/png" });
+
+if(navigator.canShare && navigator.canShare({files:[file]})){
+await navigator.share({
+title:"Reporte Domino's",
+files:[file]
+});
+}else{
+
+// fallback descarga imagen
+const link=document.createElement("a");
+link.href=URL.createObjectURL(blob);
+link.download="reporte_dominos.png";
+link.click();
+
+alert("Imagen descargada. Puedes enviarla por WhatsApp.");
+
+}
+
+});
 
 }
 
