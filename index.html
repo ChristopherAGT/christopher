@@ -99,6 +99,7 @@ button:hover{opacity:0.9;}
 
 .btn-rojo{background:#e31837;}
 .btn-gris{background:#6b7280;}
+.btn-verde{background:#25D366;}
 
 .lista{
 list-style:none;
@@ -239,6 +240,7 @@ text-align:right;
 
 <button onclick="exportarPDF()">Exportar PDF</button>
 <button class="btn-gris" onclick="copiarTexto()">Copiar</button>
+<button class="btn-verde" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
 <button class="btn-rojo" onclick="cerrarPopup()">Cerrar</button>
 
 </div>
@@ -336,11 +338,11 @@ popup.style.display='block';
 overlay.style.display='block';
 }
 
-function copiarTexto(){
+function generarTexto(){
 
 let r=datosReporte;
 
-let texto=`🍕 DOMINO'S REPORTE
+return `🍕 DOMINO'S REPORTE
 
 👤 Agente: ${r.usuario}
 📅 Fecha: ${fechaHoy()}
@@ -356,12 +358,20 @@ let texto=`🍕 DOMINO'S REPORTE
 📈 RESULTADOS
 • Conversión: ${r.conversion}%
 • Adicionales: ${r.adicionalesPorcentaje}%
-• Eficiencia: ${r.eficiencia}%
-`;
+• Eficiencia: ${r.eficiencia}%`;
+}
 
-navigator.clipboard.writeText(texto);
-
+function copiarTexto(){
+navigator.clipboard.writeText(generarTexto());
 alert("Reporte copiado");
+}
+
+function enviarWhatsApp(){
+
+let texto=encodeURIComponent(generarTexto());
+
+window.open("https://wa.me/?text="+texto,"_blank");
+
 }
 
 function mostrarFormulas(){
