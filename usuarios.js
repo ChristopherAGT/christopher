@@ -8,5 +8,5 @@ const usuarios = [
   { nombre: "Dulce Pamela Ixtecoc Barrientos", password: "dominos" },
   { nombre: "Maybelin Xchel López Baten", password: "dominos" },
   { nombre: "Naomy Andrea Blanco Mejia", password: "dominos" },
-  { nombre: "Christopher Chivalan", password: "dominos" }
+  { nombre: "Cindy Melissa Méndez Jiménez", password: "dominos" }
 ];
