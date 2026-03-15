@@ -8,7 +8,7 @@
 <script>
 const usuario = localStorage.getItem("usuario");
 if(!usuario){
-  window.location.href = "login.html";
+window.location.href = "login.html";
 }
 </script>
 
@@ -16,9 +16,7 @@ if(!usuario){
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-
 *{box-sizing:border-box;}
-
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
@@ -31,7 +29,6 @@ padding:20px;
 color:white;
 overflow:hidden;
 }
-
 body::before{
 content:"";
 position:fixed;
@@ -44,7 +41,6 @@ opacity:0.08;
 transform:translate(-50%,-50%);
 pointer-events:none;
 }
-
 .container{
 background:white;
 color:#111;
@@ -54,26 +50,22 @@ width:100%;
 max-width:420px;
 box-shadow:0 25px 60px rgba(0,0,0,0.35);
 }
-
 h1{
 text-align:center;
 margin-bottom:25px;
 color:#006491;
 font-weight:800;
 }
-
 .input-group{
 margin-bottom:18px;
 display:flex;
 flex-direction:column;
 }
-
 label{
 font-size:13px;
 margin-bottom:6px;
 color:#555;
 }
-
 input{
 padding:12px;
 border-radius:10px;
@@ -81,7 +73,6 @@ border:1px solid #ddd;
 background:#f8f8f8;
 font-size:14px;
 }
-
 button{
 width:100%;
 padding:13px;
@@ -94,19 +85,15 @@ font-weight:bold;
 font-size:15px;
 cursor:pointer;
 }
-
 button:hover{opacity:0.9;}
-
 .btn-rojo{background:#e31837;}
 .btn-gris{background:#6b7280;}
 .btn-verde{background:#25D366;}
-
 .lista{
 list-style:none;
 padding:0;
 margin:5px 0;
 }
-
 .lista li{
 display:flex;
 justify-content:space-between;
@@ -114,7 +101,6 @@ padding:6px 0;
 font-size:14px;
 border-bottom:1px solid rgba(0,0,0,0.05);
 }
-
 .resultado{
 font-weight:bold;
 font-size:14px;
@@ -124,11 +110,9 @@ border-radius:10px;
 text-align:center;
 color:white;
 }
-
 .verde{background:#16a34a;}
 .amarillo{background:#f59e0b;}
 .rojo{background:#e31837;}
-
 .floating-btn{
 position:fixed;
 bottom:20px;
@@ -143,7 +127,6 @@ border:none;
 cursor:pointer;
 box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
-
 .popup{
 position:fixed;
 top:50%;
@@ -159,7 +142,6 @@ display:none;
 z-index:1001;
 overflow:hidden;
 }
-
 .popup::before{
 content:"";
 position:absolute;
@@ -171,9 +153,7 @@ height:220px;
 background:url("https://upload.wikimedia.org/wikipedia/commons/7/74/Dominos_pizza_logo.svg") center/contain no-repeat;
 opacity:0.06;
 }
-
 .popup *{position:relative;z-index:2;}
-
 .overlay{
 position:fixed;
 inset:0;
@@ -181,15 +161,12 @@ background:rgba(0,0,0,0.6);
 display:none;
 z-index:1000;
 }
-
 .fecha{
 font-size:12px;
 margin-bottom:5px;
 text-align:right;
 }
-
 .fecha strong{color:#006491;}
-
 </style>
 </head>
 
@@ -221,7 +198,7 @@ text-align:right;
 
 <div class="input-group">
 <label>Tiempo en Llamadas (mm:ss)</label>
-<input type="text" id="tiempo" placeholder="03:20">
+<input type="text" id="tiempo" placeholder="ej. 03:20">
 </div>
 
 <button onclick="calcular()">Calcular</button>
@@ -240,13 +217,11 @@ text-align:right;
 
 <button onclick="exportarPDF()">Exportar PDF</button>
 <button class="btn-gris" onclick="copiarTexto()">Copiar</button>
-<button class="btn-verde" onclick="compartirImagen()">Compartir Reporte</button>
 <button class="btn-rojo" onclick="cerrarPopup()">Cerrar</button>
 
 </div>
 
 <script>
-
 function formatoTiempo(segundos){
 let min=Math.floor(segundos/60);
 let sec=segundos%60;
@@ -274,16 +249,13 @@ return new Date().toLocaleDateString('es-GT',{year:'numeric',month:'long',day:'n
 let datosReporte={};
 
 function calcular(){
-
 let ordenes=parseFloat(document.getElementById("ordenes").value)||0;
 let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
 let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
 let ventas=parseFloat(document.getElementById("ventas").value)||0;
-
 let tiempoInput=document.getElementById("tiempo").value||"00:00";
 let partes=tiempoInput.split(":");
 let tiempo=0;
-
 if(partes.length===2){
 tiempo=parseInt(partes[0])*60+parseInt(partes[1]);
 }
@@ -291,9 +263,7 @@ tiempo=parseInt(partes[0])*60+parseInt(partes[1]);
 let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
 let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
 let eficiencia=Math.round((conversion+adicionalesPorcentaje)/2);
-
 let ticket=ordenes>0?(ventas/ordenes):0;
-
 const usuario=localStorage.getItem("usuario")||"Usuario";
 
 datosReporte={
@@ -314,7 +284,6 @@ document.getElementById("contenido").innerHTML=`
 <div class="fecha"><strong>Fecha:</strong> ${fechaHoy()}</div>
 
 <h3>Información</h3>
-
 <ul class="lista">
 <li><span>Total de Órdenes</span><span>${ordenes}</span></li>
 <li><span>Total de Adicionales</span><span>${adicionales}</span></li>
@@ -323,11 +292,8 @@ document.getElementById("contenido").innerHTML=`
 <li><span>Ticket Promedio</span><span>${formatoMoneda(ticket)}</span></li>
 <li><span>Tiempo (AHT)</span><span>${formatoTiempo(tiempo)}</span></li>
 </ul>
-
 <hr>
-
 <h3>Resultados</h3>
-
 <div class="resultado ${colorClase(conversion)}">📈 Conversión: ${conversion}%</div>
 <div class="resultado ${colorClase(adicionalesPorcentaje)}">➕ Adicionales: ${adicionalesPorcentaje}%</div>
 <div class="resultado ${colorClase(eficiencia)}">⚡ Eficiencia: ${eficiencia}%</div>
@@ -337,40 +303,48 @@ popup.style.display='block';
 overlay.style.display='block';
 }
 
+function generarTexto(){
+let r=datosReporte;
+return `🍕 DOMINO'S REPORTE
+
+👤 Agente: ${r.usuario}
+📅 Fecha: ${fechaHoy()}
+
+📊 INFORMACIÓN
+• Órdenes: ${r.ordenes}
+• Adicionales: ${r.adicionales}
+• Llamadas: ${r.llamadas}
+• Ventas: ${formatoMoneda(r.ventas)}
+• Ticket Promedio: ${formatoMoneda(r.ticket)}
+• AHT: ${r.tiempo}
+
+📈 RESULTADOS
+• Conversión: ${r.conversion}%
+• Adicionales: ${r.adicionalesPorcentaje}%
+• Eficiencia: ${r.eficiencia}%`;
+}
+
+// -------------------- Función copiar con aviso --------------------
 function copiarTexto(){
-navigator.clipboard.writeText(document.getElementById("contenido").innerText);
-alert("Reporte copiado");
-}
-
-async function compartirImagen(){
-
-const area = document.getElementById("contenido");
-
-const canvas = await html2canvas(area);
-
-canvas.toBlob(async function(blob){
-
-const file = new File([blob], "reporte_dominos.png", { type: "image/png" });
-
-if(navigator.canShare && navigator.canShare({files:[file]})){
-await navigator.share({
-title:"Reporte Domino's",
-files:[file]
+navigator.clipboard.writeText(generarTexto()).then(()=>{
+let aviso=document.createElement("div");
+aviso.innerText="✅ Reporte copiado";
+aviso.style.position="fixed";
+aviso.style.bottom="20px";
+aviso.style.left="50%";
+aviso.style.transform="translateX(-50%)";
+aviso.style.background="#16a34a";
+aviso.style.color="white";
+aviso.style.padding="10px 18px";
+aviso.style.borderRadius="10px";
+aviso.style.fontSize="14px";
+aviso.style.zIndex="2000";
+aviso.style.boxShadow="0 4px 10px rgba(0,0,0,0.3)";
+document.body.appendChild(aviso);
+setTimeout(()=>{aviso.remove();},2000);
+}).catch(()=>{
+alert("No se pudo copiar el reporte");
 });
-}else{
-
-// fallback descarga imagen
-const link=document.createElement("a");
-link.href=URL.createObjectURL(blob);
-link.download="reporte_dominos.png";
-link.click();
-
-alert("Imagen descargada. Puedes enviarla por WhatsApp.");
-
-}
-
-});
-
 }
 
 function mostrarFormulas(){
@@ -398,23 +372,14 @@ window.location.href="login.html";
 }
 
 async function exportarPDF(){
-
 const { jsPDF } = window.jspdf;
-
 let area=document.getElementById("contenido");
-
 const canvas=await html2canvas(area);
-
 const img=canvas.toDataURL("image/png");
-
 const pdf=new jsPDF();
-
 pdf.addImage(img,'PNG',10,10,180,0);
-
 pdf.save("reporte_dominos.pdf");
-
 }
-
 </script>
 
 </body>
