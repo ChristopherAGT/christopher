@@ -17,7 +17,6 @@ window.location.href = "login.html";
 
 <style>
 *{box-sizing:border-box;}
-
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
@@ -30,7 +29,6 @@ padding:20px;
 color:white;
 overflow:hidden;
 }
-
 body::before{
 content:"";
 position:fixed;
@@ -43,7 +41,6 @@ opacity:0.08;
 transform:translate(-50%,-50%);
 pointer-events:none;
 }
-
 .container{
 background:white;
 color:#111;
@@ -53,26 +50,22 @@ width:100%;
 max-width:420px;
 box-shadow:0 25px 60px rgba(0,0,0,0.35);
 }
-
 h1{
 text-align:center;
 margin-bottom:25px;
 color:#006491;
 font-weight:800;
 }
-
 .input-group{
 margin-bottom:18px;
 display:flex;
 flex-direction:column;
 }
-
 label{
 font-size:13px;
 margin-bottom:6px;
 color:#555;
 }
-
 input{
 padding:12px;
 border-radius:10px;
@@ -80,7 +73,6 @@ border:1px solid #ddd;
 background:#f8f8f8;
 font-size:14px;
 }
-
 button{
 width:100%;
 padding:13px;
@@ -93,9 +85,7 @@ font-weight:bold;
 font-size:15px;
 cursor:pointer;
 }
-
 button:hover{opacity:0.9;}
-
 .btn-rojo{background:#e31837;}
 .btn-gris{background:#6b7280;}
 
@@ -104,7 +94,6 @@ list-style:none;
 padding:0;
 margin:5px 0;
 }
-
 .lista li{
 display:flex;
 justify-content:space-between;
@@ -122,27 +111,9 @@ border-radius:10px;
 text-align:center;
 color:white;
 }
-
 .verde{background:#16a34a;}
 .amarillo{background:#f59e0b;}
 .rojo{background:#e31837;}
-
-.tiempo-box{
-display:flex;
-align-items:center;
-gap:6px;
-}
-
-.tiempo-box input{
-flex:1;
-text-align:center;
-}
-
-.tiempo-box span{
-font-size:20px;
-font-weight:bold;
-color:#555;
-}
 
 .floating-btn{
 position:fixed;
@@ -202,7 +173,6 @@ font-size:12px;
 margin-bottom:5px;
 text-align:right;
 }
-
 .fecha strong{color:#006491;}
 </style>
 </head>
@@ -234,14 +204,8 @@ text-align:right;
 </div>
 
 <div class="input-group">
-<label>Tiempo en Llamadas</label>
-
-<div class="tiempo-box">
-<input type="number" id="minutos" placeholder="Minutos">
-<span>:</span>
-<input type="number" id="segundos" placeholder="Segundos" max="59">
-</div>
-
+<label>Tiempo en Llamadas (mm:ss)</label>
+<input type="text" id="tiempo" placeholder="ej. 03:20">
 </div>
 
 <button onclick="calcular()">Calcular</button>
@@ -299,10 +263,13 @@ let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
 let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
 let ventas=parseFloat(document.getElementById("ventas").value)||0;
 
-let minutos=parseInt(document.getElementById("minutos").value)||0;
-let segundos=parseInt(document.getElementById("segundos").value)||0;
+let tiempoInput=document.getElementById("tiempo").value||"00:00";
+let partes=tiempoInput.split(":");
+let tiempo=0;
 
-let tiempo=(minutos*60)+segundos;
+if(partes.length===2){
+tiempo=parseInt(partes[0])*60+parseInt(partes[1]);
+}
 
 let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
 let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
@@ -350,6 +317,105 @@ document.getElementById("contenido").innerHTML=`
 
 popup.style.display='block';
 overlay.style.display='block';
+}
+
+function generarTexto(){
+
+let r=datosReporte;
+
+return `> *DOMINO'S REPORTE*
+
+👤 *Agente:* ${r.usuario}
+📅 *Fecha:* ${fechaHoy()}
+
+📊 *INFORMACIÓN*
+• *Órdenes:* ${r.ordenes}
+• *Adicionales:* ${r.adicionales}
+• *Llamadas:* ${r.llamadas}
+• *Ventas:* ${formatoMoneda(r.ventas)}
+• *Ticket Promedio:* ${formatoMoneda(r.ticket)}
+• *AHT:* ${r.tiempo}
+
+📈 *RESULTADOS*
+• *Conversión:* ${r.conversion}%
+• *Adicionales:* ${r.adicionalesPorcentaje}%
+• *Eficiencia:* ${r.eficiencia}%
+
+> *FIN*`;
+}
+
+function copiarTexto(){
+
+navigator.clipboard.writeText(generarTexto()).then(()=>{
+
+let aviso=document.createElement("div");
+
+aviso.innerText="✅ Reporte copiado";
+
+aviso.style.position="fixed";
+aviso.style.bottom="20px";
+aviso.style.left="50%";
+aviso.style.transform="translateX(-50%)";
+aviso.style.background="#16a34a";
+aviso.style.color="white";
+aviso.style.padding="10px 18px";
+aviso.style.borderRadius="10px";
+aviso.style.fontSize="14px";
+aviso.style.zIndex="2000";
+
+document.body.appendChild(aviso);
+
+setTimeout(()=>{aviso.remove();},2000);
+
+}).catch(()=>{
+alert("No se pudo copiar el reporte");
+});
+}
+
+function mostrarFormulas(){
+
+document.getElementById("contenido").innerHTML=`
+<h3>Fórmulas</h3>
+
+<ul class="lista">
+<li>Conversión = (Órdenes ÷ Llamadas) × 100</li>
+<li>Adicionales = (Adicionales ÷ Órdenes) × 100</li>
+<li>Eficiencia = (Conversión + Adicionales) ÷ 2</li>
+<li>Ticket Promedio = Ventas ÷ Órdenes</li>
+</ul>
+`;
+
+popup.style.display='block';
+overlay.style.display='block';
+
+}
+
+function cerrarPopup(){
+popup.style.display='none';
+overlay.style.display='none';
+}
+
+function cerrarSesion(){
+localStorage.removeItem("usuario");
+window.location.href="login.html";
+}
+
+async function exportarPDF(){
+
+const { jsPDF } = window.jspdf;
+
+let area=document.getElementById("contenido");
+
+const canvas=await html2canvas(area);
+
+const img=canvas.toDataURL("image/png");
+
+const pdf=new jsPDF();
+
+pdf.addImage(img,'PNG',10,10,180,0);
+
+pdf.save("reporte_dominos.pdf");
+
 }
 
 </script>
