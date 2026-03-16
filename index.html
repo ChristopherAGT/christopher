@@ -88,7 +88,7 @@ cursor:pointer;
 button:hover{opacity:0.9;}
 .btn-rojo{background:#e31837;}
 .btn-gris{background:#6b7280;}
-.btn-verde{background:#25D366;}
+
 .lista{
 list-style:none;
 padding:0;
@@ -101,6 +101,7 @@ padding:6px 0;
 font-size:14px;
 border-bottom:1px solid rgba(0,0,0,0.05);
 }
+
 .resultado{
 font-weight:bold;
 font-size:14px;
@@ -113,6 +114,7 @@ color:white;
 .verde{background:#16a34a;}
 .amarillo{background:#f59e0b;}
 .rojo{background:#e31837;}
+
 .floating-btn{
 position:fixed;
 bottom:20px;
@@ -127,6 +129,7 @@ border:none;
 cursor:pointer;
 box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
+
 .popup{
 position:fixed;
 top:50%;
@@ -142,6 +145,7 @@ display:none;
 z-index:1001;
 overflow:hidden;
 }
+
 .popup::before{
 content:"";
 position:absolute;
@@ -153,7 +157,9 @@ height:220px;
 background:url("https://upload.wikimedia.org/wikipedia/commons/7/74/Dominos_pizza_logo.svg") center/contain no-repeat;
 opacity:0.06;
 }
+
 .popup *{position:relative;z-index:2;}
+
 .overlay{
 position:fixed;
 inset:0;
@@ -161,6 +167,7 @@ background:rgba(0,0,0,0.6);
 display:none;
 z-index:1000;
 }
+
 .fecha{
 font-size:12px;
 margin-bottom:5px;
@@ -222,6 +229,7 @@ text-align:right;
 </div>
 
 <script>
+
 function formatoTiempo(segundos){
 let min=Math.floor(segundos/60);
 let sec=segundos%60;
@@ -249,13 +257,16 @@ return new Date().toLocaleDateString('es-GT',{year:'numeric',month:'long',day:'n
 let datosReporte={};
 
 function calcular(){
+
 let ordenes=parseFloat(document.getElementById("ordenes").value)||0;
 let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
 let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
 let ventas=parseFloat(document.getElementById("ventas").value)||0;
+
 let tiempoInput=document.getElementById("tiempo").value||"00:00";
 let partes=tiempoInput.split(":");
 let tiempo=0;
+
 if(partes.length===2){
 tiempo=parseInt(partes[0])*60+parseInt(partes[1]);
 }
@@ -264,6 +275,7 @@ let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
 let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
 let eficiencia=Math.round((conversion+adicionalesPorcentaje)/2);
 let ticket=ordenes>0?(ventas/ordenes):0;
+
 const usuario=localStorage.getItem("usuario")||"Usuario";
 
 datosReporte={
@@ -284,6 +296,7 @@ document.getElementById("contenido").innerHTML=`
 <div class="fecha"><strong>Fecha:</strong> ${fechaHoy()}</div>
 
 <h3>Información</h3>
+
 <ul class="lista">
 <li><span>Total de Órdenes</span><span>${ordenes}</span></li>
 <li><span>Total de Adicionales</span><span>${adicionales}</span></li>
@@ -292,8 +305,11 @@ document.getElementById("contenido").innerHTML=`
 <li><span>Ticket Promedio</span><span>${formatoMoneda(ticket)}</span></li>
 <li><span>Tiempo (AHT)</span><span>${formatoTiempo(tiempo)}</span></li>
 </ul>
+
 <hr>
+
 <h3>Resultados</h3>
+
 <div class="resultado ${colorClase(conversion)}">📈 Conversión: ${conversion}%</div>
 <div class="resultado ${colorClase(adicionalesPorcentaje)}">➕ Adicionales: ${adicionalesPorcentaje}%</div>
 <div class="resultado ${colorClase(eficiencia)}">⚡ Eficiencia: ${eficiencia}%</div>
@@ -304,31 +320,38 @@ overlay.style.display='block';
 }
 
 function generarTexto(){
+
 let r=datosReporte;
-return `🍕 DOMINO'S REPORTE
 
-👤 Agente: ${r.usuario}
-📅 Fecha: ${fechaHoy()}
+return `> *DOMINO'S REPORTE*
 
-📊 INFORMACIÓN
-• Órdenes: ${r.ordenes}
-• Adicionales: ${r.adicionales}
-• Llamadas: ${r.llamadas}
-• Ventas: ${formatoMoneda(r.ventas)}
-• Ticket Promedio: ${formatoMoneda(r.ticket)}
-• AHT: ${r.tiempo}
+👤 *Agente:* ${r.usuario}
+📅 *Fecha:* ${fechaHoy()}
 
-📈 RESULTADOS
-• Conversión: ${r.conversion}%
-• Adicionales: ${r.adicionalesPorcentaje}%
-• Eficiencia: ${r.eficiencia}%`;
+📊 *INFORMACIÓN*
+• *Órdenes:* ${r.ordenes}
+• *Adicionales:* ${r.adicionales}
+• *Llamadas:* ${r.llamadas}
+• *Ventas:* ${formatoMoneda(r.ventas)}
+• *Ticket Promedio:* ${formatoMoneda(r.ticket)}
+• *AHT:* ${r.tiempo}
+
+📈 *RESULTADOS*
+• *Conversión:* ${r.conversion}%
+• *Adicionales:* ${r.adicionalesPorcentaje}%
+• *Eficiencia:* ${r.eficiencia}%
+
+> *FIN*`;
 }
 
-// -------------------- Función copiar con aviso --------------------
 function copiarTexto(){
+
 navigator.clipboard.writeText(generarTexto()).then(()=>{
+
 let aviso=document.createElement("div");
+
 aviso.innerText="✅ Reporte copiado";
+
 aviso.style.position="fixed";
 aviso.style.bottom="20px";
 aviso.style.left="50%";
@@ -339,17 +362,21 @@ aviso.style.padding="10px 18px";
 aviso.style.borderRadius="10px";
 aviso.style.fontSize="14px";
 aviso.style.zIndex="2000";
-aviso.style.boxShadow="0 4px 10px rgba(0,0,0,0.3)";
+
 document.body.appendChild(aviso);
+
 setTimeout(()=>{aviso.remove();},2000);
+
 }).catch(()=>{
 alert("No se pudo copiar el reporte");
 });
 }
 
 function mostrarFormulas(){
+
 document.getElementById("contenido").innerHTML=`
 <h3>Fórmulas</h3>
+
 <ul class="lista">
 <li>Conversión = (Órdenes ÷ Llamadas) × 100</li>
 <li>Adicionales = (Adicionales ÷ Órdenes) × 100</li>
@@ -357,8 +384,10 @@ document.getElementById("contenido").innerHTML=`
 <li>Ticket Promedio = Ventas ÷ Órdenes</li>
 </ul>
 `;
+
 popup.style.display='block';
 overlay.style.display='block';
+
 }
 
 function cerrarPopup(){
@@ -372,14 +401,23 @@ window.location.href="login.html";
 }
 
 async function exportarPDF(){
+
 const { jsPDF } = window.jspdf;
+
 let area=document.getElementById("contenido");
+
 const canvas=await html2canvas(area);
+
 const img=canvas.toDataURL("image/png");
+
 const pdf=new jsPDF();
+
 pdf.addImage(img,'PNG',10,10,180,0);
+
 pdf.save("reporte_dominos.pdf");
+
 }
+
 </script>
 
 </body>
