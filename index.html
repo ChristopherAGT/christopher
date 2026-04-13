@@ -204,8 +204,11 @@ text-align:right;
 </div>
 
 <div class="input-group">
-<label>Tiempo en Llamadas (mm:ss)</label>
-<input type="text" id="tiempo" placeholder="ej. 03:20">
+<label>Tiempo en Llamadas</label>
+<div style="display:flex; gap:10px;">
+<input type="number" id="minutos" placeholder="Min" min="0">
+<input type="number" id="segundos" placeholder="Seg" min="0" max="59">
+</div>
 </div>
 
 <button onclick="calcular()">Calcular</button>
@@ -263,13 +266,10 @@ let adicionales=parseFloat(document.getElementById("adicionales").value)||0;
 let llamadas=parseFloat(document.getElementById("llamadas").value)||0;
 let ventas=parseFloat(document.getElementById("ventas").value)||0;
 
-let tiempoInput=document.getElementById("tiempo").value||"00:00";
-let partes=tiempoInput.split(":");
-let tiempo=0;
+let min=parseInt(document.getElementById("minutos").value)||0;
+let sec=parseInt(document.getElementById("segundos").value)||0;
 
-if(partes.length===2){
-tiempo=parseInt(partes[0])*60+parseInt(partes[1]);
-}
+let tiempo=(min*60)+sec;
 
 let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
 let adicionalesPorcentaje=ordenes>0?Math.round((adicionales/ordenes)*100):0;
