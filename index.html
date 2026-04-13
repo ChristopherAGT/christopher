@@ -269,6 +269,12 @@ let ventas=parseFloat(document.getElementById("ventas").value)||0;
 let min=parseInt(document.getElementById("minutos").value)||0;
 let sec=parseInt(document.getElementById("segundos").value)||0;
 
+// Corrección automática
+if(sec >= 60){
+min += Math.floor(sec / 60);
+sec = sec % 60;
+}
+
 let tiempo=(min*60)+sec;
 
 let conversion=llamadas>0?Math.round((ordenes/llamadas)*100):0;
