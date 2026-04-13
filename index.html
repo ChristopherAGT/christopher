@@ -323,9 +323,7 @@ function generarTexto(){
 
 let r=datosReporte;
 
-return `> *DOMINO'S REPORTE*
-
-👤 *Agente:* ${r.usuario}
+return `👤 *Agente:* ${r.usuario}
 📅 *Fecha:* ${fechaHoy()}
 
 📊 *INFORMACIÓN*
@@ -339,9 +337,7 @@ return `> *DOMINO'S REPORTE*
 📈 *RESULTADOS*
 • *Conversión:* ${r.conversion}%
 • *Adicionales:* ${r.adicionalesPorcentaje}%
-• *Eficiencia:* ${r.eficiencia}%
-
-> *FIN*`;
+• *Eficiencia:* ${r.eficiencia}%`;
 }
 
 function copiarTexto(){
